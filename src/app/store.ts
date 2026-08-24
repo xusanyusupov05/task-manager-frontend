@@ -1,0 +1,15 @@
+import { configureStore } from "@reduxjs/toolkit";
+import { baseApi } from "../shared/api/baseApi";
+import loginReducer from "./loginSlice";
+
+export const store = configureStore({
+  reducer: {
+    loginSlicer: loginReducer,
+    [baseApi.reducerPath]: baseApi.reducer,
+  },
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware().concat(baseApi.middleware),
+});
+
+export type RootState = ReturnType<typeof store.getState>;
+export type AppDispatch = typeof store.dispatch;

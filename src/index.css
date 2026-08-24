@@ -1,0 +1,21 @@
+﻿@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.rubik {
+  font-family: "Rubik", sans-serif;
+}
+
+.sora {
+  font-family: "Sora", sans-serif;
+}
+
+.borderr{
+  border: 1px solid red !important;
+}
+
+.container{
+  max-width: 1350px;
+  margin: 20px auto;
+  padding: 0 20px;
+}
