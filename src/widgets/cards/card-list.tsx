@@ -1,5 +1,5 @@
 import { Col, Row, Spin } from "antd";
-import { Container } from "../shared/container/container";
+import { Container } from "../../shared/ui/container";
 import { CreateCard } from "./create-card";
 
 interface CardListProps {
@@ -16,22 +16,20 @@ export function CardList({ items = [], isLoading = false }: CardListProps) {
         {items.length > 0 ? (
           items.map((item, index) => (
             <Col span={6} key={item.id || index}>
-              <CreateCard title={item.title} type={item.type} description={item.description} />
+              <CreateCard
+                title={item.title}
+                description={item.description}
+                color={item.color}
+              />
             </Col>
           ))
         ) : (
           <>
             <Col span={6}>
-              <CreateCard title="WFM" type="born" description="Born" />
-            </Col>
-            <Col span={6}>
-              <CreateCard title="Application managment portal" type="uzbekistan" description="Uzbekistan" />
-            </Col>
-            <Col span={6}>
-              <CreateCard title="Landing page" type="cash" description="Cash" />
-            </Col>
-            <Col span={6}>
-              <CreateCard title="1009" type="piala" description="Piala" />
+              <CreateCard
+                title="Application managment portal"
+                description="Lorem ipsum dolor sit amet consectetur adipisicing elit. Ullam tempore perferendis optio architecto deleniti quia nam exercitationem cum, reprehenderit consequuntur adipisci, nesciunt omnis laborum quisquam ab, veniam quod ea et."
+              />
             </Col>
           </>
         )}

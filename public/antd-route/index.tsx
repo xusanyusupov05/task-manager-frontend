@@ -20,7 +20,27 @@ export const AntdRouters = ({ children }: { children: React.ReactNode }) => {
           },
           Button: {
             controlHeight: 45,
-            borderRadius: 10
+            borderRadius: 10,
+          },
+          Tabs: {
+            fontSize: 18,
+            fontFamily: "sora",
+            inkBarColor: "#000",
+            itemSelectedColor: "#000",
+            itemHoverColor: "#000",
+          },
+          Select: {
+            controlHeight: 40,
+            borderRadius: 10,
+            hoverBorderColor: "#d9d9d9",
+            activeBorderColor: "#d9d9d9",
+            activeOutlineColor: "transparent",
+            controlOutline: "transparent",
+            fontFamily: "sora",
+            optionSelectedBg: "transparent",
+            optionSelectedColor: "#000",
+            optionActiveBg: "rgba(0, 0, 0, 0.04)",
+            fontSize: 14
           },
         },
       }}

@@ -1,4 +1,4 @@
-﻿@tailwind base;
+@tailwind base;
 @tailwind components;
 @tailwind utilities;
 
@@ -12,10 +12,4 @@
 
 .borderr{
   border: 1px solid red !important;
-}
-
-.container{
-  max-width: 1350px;
-  margin: 20px auto;
-  padding: 0 20px;
 }

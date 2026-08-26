@@ -4,6 +4,7 @@ import { NavLink, useLocation, useNavigate } from "react-router";
 import logo from "../../../../public/assets/images-removebg-preview.png";
 import { useSidebarRoutes } from "@/shared/hooks/useSidebarRoutes";
 import { ROUTE_PATH } from "@/shared/consts/routes-path";
+import { Container } from "../../../shared/ui/container";
 
 const { Header: AntHeader } = Layout;
 
@@ -15,7 +16,7 @@ export const Header = () => {
   const menuItems = useSidebarRoutes();
 
   return (
-    <div className="container relative">
+    <Container className="relative">
       <AntHeader className="flex items-center rounded-xl justify-between px-6 bg-white border-b shadow-xl border-gray-100 h-16 z-10 w-full top-0">
         <Flex
           align="center"
@@ -48,10 +49,10 @@ export const Header = () => {
 
         <Flex align="center" gap={16}>
           <NavLink to={ROUTE_PATH.PROFILE} className="text-black text-xl">
-            <UserOutlined/>
+            <UserOutlined />
           </NavLink>
         </Flex>
       </AntHeader>
-    </div>
+    </Container>
   );
 };

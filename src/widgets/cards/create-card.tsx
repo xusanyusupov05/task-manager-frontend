@@ -12,38 +12,38 @@ const { Text } = Typography;
 interface CreateCardProps {
   title: string;
   description?: string;
-  type:
-    | "default"
-    | "cash"
-    | "born"
-    | "uzbekistan"
-    | "pomegranate"
-    | "doppi"
-    | "piala"
+  color?: string;
 }
 
-export function CreateCard({ title, description, type }: CreateCardProps) {
-  const [modal, setModal] = useState(false);
-  const gradients: Record<string, string> = {
-    default: "linear-gradient(135deg, #2b5876 0%, #4e4376 100%)",
-    cash: "#100495", 
-    born: "#072c15", 
-    uzbekistan: "#891010", 
-  };
+export const cardColors = [
+  "#1a1b41", // Deep Indigo
+  "#064e3b", // Dark Emerald
+  "#4a0404", // Midnight Crimson
+  "#18181b", // Charcoal Black
+  "#0f766e", // Deep Teal
+  "#1e3a8a", // Royal Navy
+  "#4c1d95", // Rich Plum
+  "#78350f", // Burnt Umber
+];
 
-  const currentBackground = gradients[type] || gradients.default;
+export function CreateCard({ title, description, color = cardColors[0] }: CreateCardProps) {
+  const [modal, setModal] = useState(false);
 
   const items = [
     {
       key: "1",
-      label: <Typography.Text className="text-[16px] font-medium">Chopish</Typography.Text>,
+      label: (
+        <Typography.Text className="text-[16px] font-medium">
+          Chopish
+        </Typography.Text>
+      ),
       icon: <DeleteOutlined className="text-red-500 !text-[16px]" />,
     },
     {
       key: "2",
       label: (
         <Typography.Text className="text-[16px] font-medium">
-          Choyxona ta'miri
+          G'alva ta'miri
         </Typography.Text>
       ),
       icon: <EditOutlined className="text-yellow-500 !text-[16px]" />,
@@ -72,7 +72,7 @@ export function CreateCard({ title, description, type }: CreateCardProps) {
       <div className="w-full h-[150px] relative overflow-hidden bg-gray-50">
         <div
           className="w-full h-full group-hover:scale-105 transition-transform duration-300"
-          style={{ background: currentBackground }}
+          style={{ background: color }}
         />
       </div>
 
@@ -87,10 +87,14 @@ export function CreateCard({ title, description, type }: CreateCardProps) {
           />
         </Dropdown>
         <Modal
-          title={<span className="sora font-bold text-[18px]">Gapning indallosi akalar</span>}
+          title={
+            <span className="sora font-bold text-[18px]">
+              Gapning indallosi akalar
+            </span>
+          }
           open={modal}
           onCancel={() => setModal(false)}
-          maskStyle={{ backdropFilter: "blur(5px)" }}
+          styles={{ mask: { backdropFilter: "blur(15px)" } }}
           className="w-[350px]"
           footer={null}
         >

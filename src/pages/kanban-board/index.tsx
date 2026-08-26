@@ -1,7 +1,12 @@
-import { CardsMain } from "@/widgets/cards";
+import { KanbanColumn } from "@/widgets/kanban-board/kanban-column";
+import { Flex } from "antd";
 
-export function KanbanBoard() {
-  return <>
-  <CardsMain/>
-  </>;
+export function KanbanBoardPage() {
+  return (
+    <>
+      <Flex align="center" gap={20}>
+        <KanbanColumn />
+      </Flex>
+    </>
+  );
 }

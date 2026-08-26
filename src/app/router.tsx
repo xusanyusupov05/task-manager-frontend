@@ -1,7 +1,7 @@
 import { createBrowserRouter } from "react-router-dom";
 import MainLayout from "@/pages/layout";
 import { routeList } from "@/shared/consts/routes-list";
-import { PersonalProfile } from "@/pages/profile";
+import PersonalProfile from "@/pages/profile";
 import { ROUTE_PATH } from "@/shared/consts/routes-path";
 import { AuthPage } from "@/pages/auth";
 import { LoginPage } from "@/pages/login";
@@ -27,7 +27,7 @@ export const router = createBrowserRouter([
       {
         path: ROUTE_PATH.PROFILE.replace(/^\//, ""),
         element: <PersonalProfile />,
-      }
+      },
     ],
   },
 ]);

@@ -1,10 +1,7 @@
-import type { RootState } from "app/store";
 import { useMemo } from "react";
-import { useSelector } from "react-redux";
 import { routeList } from "../consts/routes-list";
 
 export const useSidebarRoutes = () => {
-  const permissions = useSelector((state: RootState) => state.loginSlicer.permissions);
 
   return useMemo(
     () =>
@@ -15,6 +12,7 @@ export const useSidebarRoutes = () => {
           label: route.labelKey,
           icon: route.icon,
         })),
-    [permissions],
+    [routeList],
   );
 };
+
