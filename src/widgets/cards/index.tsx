@@ -3,8 +3,8 @@ import { CardList } from "./card-list";
 import { CardFilter } from "./filter";
 
 export function CardsMain() {
-  const [data, setData] = useState<any[]>([]);
-  const [loading, setLoading] = useState(false);
+  const [data, _setData] = useState<any[]>([]);
+  const [loading, _setLoading] = useState(false);
 
   return (
     <div className="w-full">
