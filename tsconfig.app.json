@@ -10,13 +10,12 @@
 
     /* Bundler mode */
     "moduleResolution": "bundler",
-    "baseUrl": ".",
     "paths": {
-      "@/*": ["src/*"],
-      "app/*": ["src/app/*"],
-      "shared/*": ["src/shared/*"],
-      "widgets/*": ["src/widgets/*"],
-      "pages/*": ["src/pages/*"]
+      "@/*": ["./src/*"],
+      "app/*": ["./src/app/*"],
+      "shared/*": ["./src/shared/*"],
+      "widgets/*": ["./src/widgets/*"],
+      "pages/*": ["./src/pages/*"]
     },
     "allowImportingTsExtensions": true,
     "verbatimModuleSyntax": true,
