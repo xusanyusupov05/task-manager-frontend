@@ -1,7 +1,6 @@
 import { Col, Row, Spin } from "antd";
 import { Container } from "../../shared/ui/container";
 import { CreateCard } from "./create-card";
-
 export interface CardItem {
   id?: string | number;
   title: string;

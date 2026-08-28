@@ -4,4 +4,5 @@ export const API_MAP = {
     REGISTER: "/auth/register",
     ME: "/auth/me",
   },
+  WORKSPACE: "/workspaces",
 };

@@ -32,7 +32,9 @@ export default function LoginForm() {
       if (token) {
         localStorage.setItem("accessToken", token);
         localStorage.setItem("token", token);
-        dispatch(setCredentials({ user: user?.name ?? values.username, token }));
+        dispatch(
+          setCredentials({ user: user?.name ?? values.username, token }),
+        );
       }
       toast.success("Xush kelibsiz! Tizimga muvaffaqiyatli kirdingiz.");
       navigate(ROUTE_PATH.HOME);

@@ -4,8 +4,9 @@ import {
   EllipsisOutlined,
   PlusOutlined,
 } from "@ant-design/icons";
-import { Button, Dropdown, Flex, Typography } from "antd";
+import { Button, Dropdown, Flex, Form, Input, Typography } from "antd";
 import { useDraggable, useDroppable } from "@dnd-kit/react";
+import { useState } from "react";
 
 // 1. Komponent qabul qiladigan props turlari
 interface KanbanColumnProps {
@@ -13,7 +14,6 @@ interface KanbanColumnProps {
   title: string; // Ustun nomi (masalan: Todo, In Progress)
   count?: number; // Ustundagi kartalar soni
   children?: React.ReactNode; // Ichidagi task kartalari (TaskCard)
-  onAddClick?: () => void; // Yangi vazifa qo'shish tugmasi bosilganda ishlaydi
 }
 
 // 2. Asosiy Kanban ustuni komponenti
@@ -22,12 +22,12 @@ export function KanbanColumn({
   title,
   count = 0,
   children,
-  onAddClick,
 }: KanbanColumnProps) {
   // 2.1 Drag-and-drop: Ustunni boshqa elementlarni qabul qiluvchi (droppable) qilish
   const { ref: droppableRef, isDropTarget } = useDroppable({
     id,
   });
+  const [openCardAdd, setOpenCardAdd] = useState(false);
 
   // 2.2 Drag-and-drop: Ustunning o'zini ham suriladigan (draggable) qilish
   const {
@@ -98,7 +98,7 @@ export function KanbanColumn({
               gap={8}
               className="flex-1 min-w-0 cursor-grab active:cursor-grabbing mr-2 py-1"
             >
-              <Typography.Text className="sora font-semibold text-[17px] text-gray-800 line-clamp-2">
+              <Typography.Text className="sora font-semibold text-[15px] text-gray-800 leading-snug break-words line-clamp-2">
                 {title}
               </Typography.Text>
               <span className="px-2 py-0.5 bg-gray-200 text-gray-700 text-xs font-semibold rounded-full rubik shrink-0">
@@ -127,15 +127,42 @@ export function KanbanColumn({
             {children}
           </div>
 
-          {/* 2.8 Yangi vazifa qo'shish tugmasi */}
-          <Button
-            type="dashed"
-            icon={<PlusOutlined />}
-            onClick={onAddClick}
-            className="mt-2 w-full h-10 rounded-xl font-medium sora text-gray-600 hover:!text-blue-600 hover:!border-blue-500"
-          >
-            Bosh og'riq
-          </Button>
+          {openCardAdd ? (
+            <div className="mt-2 p-3 bg-white rounded-xl border border-gray-200 shadow-sm">
+              <Form layout="vertical">
+                <Form.Item className="!mb-3">
+                  <Input
+                    placeholder="Yozavering."
+                    className="sora text-sm !rounded-lg !border-gray-200 focus:!border-blue-500 h-9"
+                  />
+                </Form.Item>
+                <Flex vertical gap={6} className="w-full">
+                  <Button
+                    type="primary"
+                    className="sora text-xs font-semibold rounded-lg bg-blue-600 hover:!bg-blue-500 shadow-sm w-full h-9"
+                  >
+                    Buni ham dushanbadan qilamiz!
+                  </Button>
+                  <Button
+                    type="text"
+                    onClick={() => setOpenCardAdd(false)}
+                    className="sora text-xs rounded-lg text-gray-500 hover:!text-gray-700 hover:!bg-gray-100 font-medium w-full h-8"
+                  >
+                    Kerak emas
+                  </Button>
+                </Flex>
+              </Form>
+            </div>
+          ) : (
+            <Button
+              onClick={() => setOpenCardAdd(true)}
+              type="dashed"
+              icon={<PlusOutlined />}
+              className="mt-2 w-full h-10 rounded-xl font-medium sora text-gray-600 hover:!text-blue-600 hover:!border-blue-500"
+            >
+            </Button>
+          )}
+
         </Flex>
       </div>
     </div>
