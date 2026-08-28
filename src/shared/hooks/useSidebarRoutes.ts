@@ -12,7 +12,7 @@ export const useSidebarRoutes = () => {
           label: route.labelKey,
           icon: route.icon,
         })),
-    [routeList],
+    [],
   );
 };
 

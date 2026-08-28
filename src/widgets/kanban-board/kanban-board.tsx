@@ -57,11 +57,12 @@ const INITIAL_DATA: ColumnsState = {
     ],
   },
   done: {
-    title: "Yuzimiz yorug'",
+    title: "Ish bitdi",
     tasks: [
       {
         id: "task-5",
-        title: "Dastlabki loyiha strukturasini yaratish va kutubxonalarni o'rnatish",
+        title:
+          "Dastlabki loyiha strukturasini yaratish va kutubxonalarni o'rnatish",
         labels: ["managment"],
         members: ["Sotiboldiyev Otabek"],
       },
@@ -72,7 +73,8 @@ const INITIAL_DATA: ColumnsState = {
     tasks: [
       {
         id: "task-6",
-        title: "Dastlabki loyiha strukturasini yaratish va kutubxonalarni o'rnatish",
+        title:
+          "Dastlabki loyiha strukturasini yaratish va kutubxonalarni o'rnatish",
         labels: ["backend"],
         members: ["Sotiboldiyev Otabek"],
       },
@@ -83,7 +85,8 @@ const INITIAL_DATA: ColumnsState = {
     tasks: [
       {
         id: "task-7",
-        title: "Dastlabki loyiha strukturasini yaratish va kutubxonalarni o'rnatish",
+        title:
+          "Dastlabki loyiha strukturasini yaratish va kutubxonalarni o'rnatish",
         labels: ["frontend"],
         members: ["Sotiboldiyev Otabek"],
       },
@@ -96,17 +99,60 @@ export function KanbanBoard() {
   // 4.1 Ustunlar va undagi kartalar holatini saqlovchi state
   const [columns, setColumns] = useState<ColumnsState>(INITIAL_DATA);
 
-  // 4.2 Drag-and-drop yakunlanganda (karta qo'yib yuborilganda) ishlaydigan asosiy funksiya
+  // 4.2 Drag-and-drop yakunlanganda (karta yoki ustun qo'yib yuborilganda) ishlaydigan asosiy funksiya
   const handleDragEnd = (event: DragEndEvent) => {
     const { operation } = event;
-    const source = operation?.source; // Tortilgan karta
-    const target = operation?.target; // Karta tashlangan joy (ustun yoki boshqa karta)
+    const source = operation?.source; // Tortilgan element (karta yoki ustun)
+    const target = operation?.target; // Tashlangan joy (ustun yoki karta)
 
     // Agar tortilgan yoki tashlangan joy mavjud bo'lmasa, funksiyani to'xtatish
     if (!source || !target) return;
 
-    const sourceCardId = String(source.id);
+    const sourceId = String(source.id);
     const targetId = String(target.id);
+
+    // =========================================================================
+    // A) USTUNNING O'ZI SURILAYOTGAN BO'LSA (O'NGGA VA CHAPGA ALMASHTIRISH)
+    // =========================================================================
+    if (columns[sourceId]) {
+      let targetColumnId: string | null = null;
+
+      if (columns[targetId]) {
+        // To'g'ridan-to'g'ri boshqa ustun ustiga tashlansa
+        targetColumnId = targetId;
+      } else {
+        // Boshqa ustun ichidagi kartaning ustiga tashlansa
+        for (const [colId, colData] of Object.entries(columns)) {
+          if (colData.tasks.some((t) => t.id === targetId)) {
+            targetColumnId = colId;
+            break;
+          }
+        }
+      }
+
+      if (!targetColumnId || targetColumnId === sourceId) return;
+
+      // Ustunlarning ketma-ketlik o'rnini almashtiramiz
+      setColumns((prev) => {
+        const entries = Object.entries(prev);
+        const sourceIndex = entries.findIndex(([colId]) => colId === sourceId);
+        const targetIndex = entries.findIndex(([colId]) => colId === targetColumnId);
+
+        if (sourceIndex === -1 || targetIndex === -1 || sourceIndex === targetIndex) return prev;
+
+        const newEntries = [...entries];
+        const [movedColumn] = newEntries.splice(sourceIndex, 1);
+        newEntries.splice(targetIndex, 0, movedColumn);
+
+        return Object.fromEntries(newEntries);
+      });
+      return;
+    }
+
+    // =========================================================================
+    // B) KARTA (TASK) SURILAYOTGAN BO'LSA
+    // =========================================================================
+    const sourceCardId = sourceId;
 
     // 4.3 Karta qaysi ustundan tortib olinganini va uning indeksini aniqlash
     let sourceColumnId: string | null = null; // Tortilgan ustun ID-si (masalan: "todo")
@@ -152,7 +198,8 @@ export function KanbanBoard() {
     if (!targetColumnId) return;
 
     // Agar karta o'z joyiga qaytarib qo'yilgan bo'lsa, hech narsa qilmaslik
-    if (sourceColumnId === targetColumnId && sourceIndex === targetIndex) return;
+    if (sourceColumnId === targetColumnId && sourceIndex === targetIndex)
+      return;
 
     // 4.5 Ustunlar state-ini yangilash (kartani ko'chirish)
     setColumns((prev) => {
@@ -162,7 +209,8 @@ export function KanbanBoard() {
 
       if (sourceColumnId === targetColumnId) {
         // A) Bitta ustun ichida tartibni o'zgartirish
-        const adjustedTargetIndex = sourceIndex < targetIndex ? targetIndex : targetIndex;
+        const adjustedTargetIndex =
+          sourceIndex < targetIndex ? targetIndex : targetIndex;
         newSourceTasks.splice(adjustedTargetIndex, 0, draggedTask!);
 
         return {
@@ -195,7 +243,11 @@ export function KanbanBoard() {
   return (
     // 4.6 Barcha ustunlarni Drag-and-drop qobig'i bilan o'rash
     <DragDropProvider onDragEnd={handleDragEnd}>
-      <Flex align="start" gap={20} className="w-full h-full overflow-x-auto p-4">
+      <Flex
+        align="start"
+        gap={20}
+        className="w-full h-full overflow-x-auto p-4"
+      >
         {/* 4.7 Ustunlar va ularning ichidagi kartalarni birma-bir render qilish */}
         {Object.entries(columns).map(([columnId, column]) => (
           <KanbanColumn

@@ -1,29 +1,55 @@
 import { Form, Input, Button, Typography, Flex, Image } from "antd";
 import { LockOutlined, UserOutlined } from "@ant-design/icons";
-import logo from "/assets/images-removebg-preview.png";
-import naqsh from "/assets/naqsh-removebg-preview.png";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { ROUTE_PATH } from "@/shared/consts/routes-path";
+import { useRegisterUserMutation } from "@/entities/auth/api";
+import { useDispatch } from "react-redux";
+import { setCredentials } from "@/app/loginSlice";
+import { toast } from "sonner";
+
+interface RegisterFormValues {
+  username: string;
+  password: string;
+}
+
+const logo = "/assets/images-removebg-preview.png";
 
 export default function AuthForm() {
-  const onFinish = (values: any) => {
-    console.log("Success:", values);
+  const [registerUser, { isLoading }] = useRegisterUserMutation();
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const onFinish = async (values: RegisterFormValues) => {
+    try {
+      const response = await registerUser({
+        name: values.username,
+        password: values.password,
+      }).unwrap();
+
+      const token = response?.data?.token || response?.token;
+      const user = response?.data?.user || response?.user;
+
+      if (token) {
+        localStorage.setItem("accessToken", token);
+        localStorage.setItem("token", token);
+        dispatch(setCredentials({ user: user?.name ?? values.username, token }));
+      }
+      toast.success("Muvaffaqiyatli ro'yxatdan o'tdingiz!");
+      navigate(ROUTE_PATH.HOME);
+    } catch (error: unknown) {
+      console.error(error);
+      const err = error as { data?: { message?: string }; message?: string };
+      const message =
+        err?.data?.message ||
+        err?.message ||
+        "Ro'yxatdan o'tishda xatolik yuz berdi!";
+      toast.error(message);
+    }
   };
 
   return (
     <>
       <div className="w-full max-w-md px-8 py-10 sm:px-10 sm:py-12 rounded-[2rem] bg-white border border-gray-100 shadow-[0_20px_60px_rgba(0,0,0,0.05)] relative overflow-hidden group">
-        <img
-          src={naqsh}
-          alt=""
-          className="absolute -bottom-10 -left-10 w-40 opacity-[0.03] pointer-events-none rotate-[45deg]"
-        />
-        <img
-          src={naqsh}
-          alt=""
-          className="absolute -top-10 -right-10 w-40 opacity-[0.03] pointer-events-none -rotate-[45deg]"
-        />
-
         <Flex
           align="center"
           justify="center"
@@ -90,6 +116,7 @@ export default function AuthForm() {
 
           <Form.Item className="!mb-0">
             <Button
+              loading={isLoading}
               htmlType="submit"
               className="w-full h-12 rounded-xl bg-slate-900 !border-0 text-white font-medium text-lg sora shadow-md shadow-slate-900/20 hover:bg-slate-800 hover:-translate-y-0.5 active:translate-y-0 transition-all duration-300"
             >

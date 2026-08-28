@@ -1,10 +1,11 @@
 import { UserOutlined } from "@ant-design/icons";
 import { Flex, Image, Layout, Menu, Typography, type MenuProps } from "antd";
-import { NavLink, useLocation, useNavigate } from "react-router";
-import logo from "../../../../public/assets/images-removebg-preview.png";
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import { useSidebarRoutes } from "@/shared/hooks/useSidebarRoutes";
 import { ROUTE_PATH } from "@/shared/consts/routes-path";
 import { Container } from "../../../shared/ui/container";
+
+const logo = "/assets/images-removebg-preview.png";
 
 const { Header: AntHeader } = Layout;
 

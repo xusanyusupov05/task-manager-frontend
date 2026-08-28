@@ -40,7 +40,7 @@ export const AntdRouters = ({ children }: { children: React.ReactNode }) => {
             optionSelectedBg: "transparent",
             optionSelectedColor: "#000",
             optionActiveBg: "rgba(0, 0, 0, 0.04)",
-            fontSize: 14
+            fontSize: 14,
           },
         },
       }}

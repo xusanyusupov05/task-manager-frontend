@@ -1,11 +1,11 @@
 import { LOCAL_STORAGE_KEYS } from "@/shared/helpers/consts";
 
-/* eslint-disable @typescript-eslint/no-explicit-any */
+ 
 export const getLocalStorage = <T>(key: string): T | null => {
   const raw = localStorage.getItem(key);
 
   if (raw === null) throw new Error("Local storage key not found");
-  
+
   return JSON.parse(raw) as T;
 };
 
@@ -33,7 +33,3 @@ export const generateUUID = () => {
     return v.toString(16);
   });
 };
-
-
-
-

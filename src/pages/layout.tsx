@@ -1,22 +1,22 @@
 import { Layout } from "antd";
-import React from "react";
-import { Outlet } from "react-router-dom";
+import React, { useEffect } from "react";
+import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import { Header } from "@/widgets/shared/header";
-// import { useSelector } from "react-redux";
-// import type { RootState } from "@/app/store";
+import { useSelector } from "react-redux";
+import type { RootState } from "@/app/store";
 
 const { Content } = Layout;
 
 const MainLayout: React.FC = () => {
-  // const token = useSelector((state: RootState) => state.loginSlicer.token);
-  // const navigate = useNavigate();
-  // const location = useLocation();
+  const token = useSelector((state: RootState) => state.loginSlicer.token);
+  const navigate = useNavigate();
+  const location = useLocation();
 
-  // useEffect(() => {
-  //   if (!token && location.pathname !== "/auth") {
-  //     navigate("/auth");
-  //   }
-  // }, [token, navigate, location.pathname]);
+  useEffect(() => {
+    if (!token && location.pathname !== "/auth") {
+      navigate("/auth");
+    }
+  }, [token, navigate, location.pathname]);
 
   return (
     <Layout className="min-h-screen">

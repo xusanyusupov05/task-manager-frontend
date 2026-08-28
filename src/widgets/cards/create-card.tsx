@@ -15,7 +15,7 @@ interface CreateCardProps {
   color?: string;
 }
 
-export const cardColors = [
+const cardColors = [
   "#1a1b41", // Deep Indigo
   "#064e3b", // Dark Emerald
   "#4a0404", // Midnight Crimson

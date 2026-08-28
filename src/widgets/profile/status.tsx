@@ -1,4 +1,4 @@
-import { Flex, Tag, Typography } from "antd";
+import { Flex, Tag } from "antd";
 
 interface NicknameConfig {
   label: string;
@@ -53,8 +53,8 @@ export function ProfileStatus({ taskCount = 0 }: { taskCount: number }) {
   const { label, className } = getNicknameConfig(taskCount);
 
   return (
-    <Flex gap={10} className="pl-5">
-      <Typography.Text className="sora font-semibold">Kimsiz:</Typography.Text>
+    <Flex gap={10}>
+      {/* <Typography.Text className="sora font-semibold">Kimsiz:</Typography.Text> */}
       <Tag
         className={`py-0.5 rounded-[6px] sora text-xs inline-flex items-center justify-center transition-all ${className}`}
       >

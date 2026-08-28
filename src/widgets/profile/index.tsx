@@ -2,17 +2,23 @@ import { Avatar, Col, Flex, Row, Tabs, Typography } from "antd";
 import { ProfileSetting } from "./setting";
 import { ProfileStatus } from "./status";
 import { AboutStatus } from "./about-status";
+import { useGetMeQuery } from "@/entities/me";
+import { Loader } from "@/shared/ui/loader";
 interface tabProps {
   key: string;
   label: React.ReactNode;
   children: React.ReactNode;
 }
 
-type UserRole = "admin" | "user";
+// type UserRole = "admin" | "user";
 
 export default function PersonalProfileMain() {
-  const role: UserRole = "admin";
+  const { data, isLoading } = useGetMeQuery();
+  // const role: UserRole = "admin";
 
+  if (isLoading) {
+    return <Loader text="Choylashamiz..." />;
+  }
   const itemTab: tabProps[] = [
     {
       key: "1",
@@ -35,10 +41,6 @@ export default function PersonalProfileMain() {
           align="center"
           className="w-full h-full relative min-h-[200px]"
         >
-          <Flex className="gap-2 absolute top-0 left-0">
-            <ProfileStatus taskCount={20} />
-          </Flex>
-
           <Flex
             align="center"
             gap={24}
@@ -46,7 +48,7 @@ export default function PersonalProfileMain() {
           >
             <Avatar size={140} />
             <Flex vertical>
-              {role === "admin" ? (
+              {/* {role === "admin" ? (
                 <Typography.Text className="sora text-xs font-bold text-[#36a10f] mb-1">
                   ADMIN
                 </Typography.Text>
@@ -54,13 +56,13 @@ export default function PersonalProfileMain() {
                 <Typography.Text className="sora text-xs font-bold text-blue-500 mb-1">
                   USER
                 </Typography.Text>
+              )} */}
+              {data?.data?.fullName && (
+                <Typography.Text className="text-3xl sora font-bold">
+                  {data.data.fullName.split("")[0].toUpperCase() + data.data.fullName.slice(1).toLowerCase()}
+                </Typography.Text>
               )}
-              <Typography.Text className="text-3xl sora font-bold">
-                Yusupov Xusan
-              </Typography.Text>
-              <Typography.Text className="text-xl sora text-gray-500">
-                yusupov@gmail.com
-              </Typography.Text>
+              <ProfileStatus taskCount={20} />
             </Flex>
           </Flex>
         </Flex>

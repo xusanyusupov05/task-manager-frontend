@@ -1,10 +1,10 @@
 import { useState } from "react";
-import { CardList } from "./card-list";
+import { CardList, type CardItem } from "./card-list";
 import { CardFilter } from "./filter";
 
 export function CardsMain() {
-  const [data, _setData] = useState<any[]>([]);
-  const [loading, _setLoading] = useState(false);
+  const [data] = useState<CardItem[]>([]);
+  const [loading] = useState(false);
 
   return (
     <div className="w-full">

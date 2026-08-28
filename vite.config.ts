@@ -11,11 +11,14 @@ export default defineConfig({
 
   resolve: {
     alias: {
-      "@": path.resolve(__dirname, "src"),
-      app: path.resolve(__dirname, "src/app"),
-      shared: path.resolve(__dirname, "src/shared"),
-      widgets: path.resolve(__dirname, "src/widgets"),
-      pages: path.resolve(__dirname, "src/pages"),
+      "@": path.resolve(import.meta.dirname, "src"),
+      app: path.resolve(import.meta.dirname, "src/app"),
+      shared: path.resolve(import.meta.dirname, "src/shared"),
+      widgets: path.resolve(import.meta.dirname, "src/widgets"),
+      pages: path.resolve(import.meta.dirname, "src/pages"),
     },
   },
+  server: {
+    host: true
+  }
 });
