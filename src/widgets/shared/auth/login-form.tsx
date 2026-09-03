@@ -26,36 +26,23 @@ export default function LoginForm() {
         password: values.password,
       }).unwrap();
 
-      const token =
-        (typeof response?.data === "string" ? response.data : null) ||
-        response?.data?.token ||
-        response?.data?.accessToken ||
-        response?.token ||
-        response?.accessToken;
+      const { token, user } = response?.data || {};
 
-      const user =
-        response?.data?.user ||
-        response?.user ||
-        (typeof response?.data === "object" ? response?.data : null);
-
-      if (!token) {
-        toast.error("Kirish muvaffaqiyatli, lekin serverdan token olinmadi!");
-        return;
+      if (token) {
+        localStorage.setItem("accessToken", token);
+        localStorage.setItem("token", token);
+        dispatch(
+          setCredentials({ user: user?.name ?? values.username, token }),
+        );
       }
 
-      localStorage.setItem("accessToken", token);
-      localStorage.setItem("token", token);
-      dispatch(
-        setCredentials({ user: user?.name ?? values.username, token }),
-      );
       toast.success("Xush kelibsiz! Tizimga muvaffaqiyatli kirdingiz.");
       navigate(ROUTE_PATH.HOME);
-    } catch (error: unknown) {
+    } catch (error) {
       console.error(error);
-      const err = error as { data?: { message?: string }; message?: string };
       const message =
-        err?.data?.message ||
-        err?.message ||
+        error?.data?.message ||
+        error?.message ||
         "Kirishda xatolik yuz berdi. Ism yoki parolni tekshiring!";
       toast.error(message);
     }

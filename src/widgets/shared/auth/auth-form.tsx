@@ -26,17 +26,7 @@ export default function AuthForm() {
         password: values.password,
       }).unwrap();
 
-      const token =
-        (typeof response?.data === "string" ? response.data : null) ||
-        response?.data?.token ||
-        response?.data?.accessToken ||
-        response?.token ||
-        response?.accessToken;
-
-      const user =
-        response?.data?.user ||
-        response?.user ||
-        (typeof response?.data === "object" ? response?.data : null);
+      const { token, user } = response?.data || {};
 
       if (token) {
         localStorage.setItem("accessToken", token);
@@ -44,18 +34,15 @@ export default function AuthForm() {
         dispatch(
           setCredentials({ user: user?.name ?? values.username, token }),
         );
-        toast.success("Muvaffaqiyatli ro'yxatdan o'tdingiz!");
-        navigate(ROUTE_PATH.HOME);
-      } else {
-        toast.success("Muvaffaqiyatli ro'yxatdan o'tdingiz! Endi hisobingizga kiring.");
-        navigate(ROUTE_PATH.LOGIN);
       }
-    } catch (error: unknown) {
+
+      toast.success("Muvaffaqiyatli ro'yxatdan o'tdingiz!");
+      navigate(ROUTE_PATH.HOME);
+    } catch (error) {
       console.error(error);
-      const err = error as { data?: { message?: string }; message?: string };
       const message =
-        err?.data?.message ||
-        err?.message ||
+        error?.data?.message ||
+        error?.message ||
         "Ro'yxatdan o'tishda xatolik yuz berdi!";
       toast.error(message);
     }
