@@ -2,21 +2,17 @@ import { Layout } from "antd";
 import React, { useEffect } from "react";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import { Header } from "@/widgets/shared/header";
-import { useSelector } from "react-redux";
-import type { RootState } from "@/app/store";
 
 const { Content } = Layout;
 
 const MainLayout: React.FC = () => {
-  const token = useSelector((state: RootState) => state.loginSlicer.token);
   const navigate = useNavigate();
   const location = useLocation();
-
   useEffect(() => {
-    if (!token && location.pathname !== "/auth") {
-      navigate("/auth");
+    if (location.pathname !== '/auth' && !localStorage.getItem('accessToken')) {
+      navigate('/auth', { replace: true });
     }
-  }, [token, navigate, location.pathname]);
+  }, [location.pathname, navigate]);
 
   return (
     <Layout className="min-h-screen">

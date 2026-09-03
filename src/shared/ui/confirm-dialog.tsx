@@ -14,6 +14,7 @@ interface Props {
   description?: string;
   open: boolean;
   closable?: boolean;
+  loading?: boolean;
   cancelText?: string;
   confirmText?: string;
   onCancel: () => void;
@@ -65,6 +66,7 @@ export function ConfirmDialog({
   description,
   open,
   closable = false,
+  loading = false,
   cancelText = "Yo'q, adashtim",
   confirmText,
   onCancel,
@@ -75,8 +77,8 @@ export function ConfirmDialog({
   return (
     <Modal
       open={open}
-      onCancel={onCancel}
-      closable={closable}
+      onCancel={loading ? undefined : onCancel}
+      closable={closable && !loading}
       footer={null}
       width={480}
       style={{ top: 32 }}
@@ -111,12 +113,15 @@ export function ConfirmDialog({
 
         <Flex justify="flex-end" gap={10} className="mt-3">
           <Button
+            disabled={loading}
             onClick={onCancel}
-            className="sora h-10 px-4 rounded-[8px] border-gray-200 text-slate-600 hover:!text-slate-600 hover:!border-gray-200 font-medium"
+            className="sora h-10 px-4 rounded-[8px] border-gray-200 text-slate-600 hover:!text-slate-600 hover:!border-gray-200 font-medium disabled:opacity-50"
           >
             {cancelText}
           </Button>
           <Button
+            loading={loading}
+            disabled={loading}
             onClick={onConfirm}
             className={`sora h-10 px-5 rounded-[8px] font-medium transition-all duration-200 active:scale-95 ${currentConfig.confirmBtnClass}`}
           >

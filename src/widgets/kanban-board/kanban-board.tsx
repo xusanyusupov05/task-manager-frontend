@@ -4,23 +4,20 @@ import { TaskCard } from "@/widgets/kanban-board/task-card";
 import { Flex } from "antd";
 import { useState } from "react";
 
-// 1. Bitta vazifa (task) ma'lumotlarining tipi
 interface Task {
-  id: string; // Vazifaning unikal ID-si
-  title: string; // Vazifa matni / sarlavhasi
-  labels: string[]; // Teglar (frontend, backend, design...)
-  members: string[]; // Vazifaga biriktirilgan a'zolar ro'yxati
+  id: string; 
+  title: string;
+  labels: string[];
+  members: string[];
 }
 
-// 2. Barcha ustunlar holatining tipi (har bir ustun nomi va undagi tasklar ro'yxati)
 interface ColumnsState {
   [key: string]: {
-    title: string; // Ustun nomi (Todo, In Progress, Done)
-    tasks: Task[]; // Ustundagi vazifalar massivi
+    title: string;
+    tasks: Task[];
   };
 }
 
-// 3. Dastlabki statik ma'lumotlar (boshlang'ich ustunlar va kartalar)
 const INITIAL_DATA: ColumnsState = {
   todo: {
     title: "Dushanbadan boshlaymiz",
@@ -94,7 +91,6 @@ const INITIAL_DATA: ColumnsState = {
   },
 };
 
-// 4. Asosiy KanbanBoard doskasi komponenti
 export function KanbanBoard() {
   // 4.1 Ustunlar va undagi kartalar holatini saqlovchi state
   const [columns, setColumns] = useState<ColumnsState>(INITIAL_DATA);
@@ -107,7 +103,6 @@ export function KanbanBoard() {
 
     // Agar tortilgan yoki tashlangan joy mavjud bo'lmasa, funksiyani to'xtatish
     if (!source || !target) return;
-
     const sourceId = String(source.id);
     const targetId = String(target.id);
 

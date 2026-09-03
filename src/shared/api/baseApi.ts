@@ -28,6 +28,7 @@ export const baseApi = createApi({
   refetchOnReconnect: true,
   endpoints: () => ({}),
   tagTypes:[
-    "Workspace"
+    "Workspace",
+    
   ]
 })

@@ -1,43 +1,45 @@
-import { Col, Row, Spin } from "antd";
+import { Col, Row, Typography } from "antd";
 import { Container } from "../../shared/ui/container";
-import { CreateCard } from "./create-card";
+import { CreateCard } from "./card";
+import { Loader } from "@/shared/ui/loader";
+
 export interface CardItem {
   id?: string | number;
   title: string;
   description?: string;
+  bgColor?: string;
   color?: string;
+  createdAt?: string;
+  updatedAt?: string;
+  ownerId?: string;
 }
 
 interface CardListProps {
-  items?: CardItem[];
+  items?: { data?: CardItem[] };
   isLoading?: boolean;
 }
 
-export function CardList({ items = [], isLoading = false }: CardListProps) {
-  if (isLoading) return <Spin size="large" />;
+export function CardList({ items, isLoading = false }: CardListProps) {
+  if (isLoading) {
+    return <Loader/>;
+  }
 
   return (
     <Container>
       <Row gutter={[16, 16]}>
-        {items.length > 0 ? (
-          items.map((item, index) => (
+        {(items?.data?.length ?? 0) > 0 ? (
+          items?.data?.map((item, index) => (
             <Col span={6} key={item.id || index}>
               <CreateCard
+                id={item.id! as string}
                 title={item.title}
                 description={item.description}
-                color={item.color}
+                color={item.bgColor || item.color}
               />
             </Col>
           ))
         ) : (
-          <>
-            <Col span={6}>
-              <CreateCard
-                title="Application managment portal"
-                description="Lorem ipsum dolor sit amet consectetur adipisicing elit. Ullam tempore perferendis optio architecto deleniti quia nam exercitationem cum, reprehenderit consequuntur adipisci, nesciunt omnis laborum quisquam ab, veniam quod ea et."
-              />
-            </Col>
-          </>
+         <Typography.Text className="rubik text-center w-full">Galva yo'q hozrcha tinchlik</Typography.Text>
         )}
       </Row>
     </Container>

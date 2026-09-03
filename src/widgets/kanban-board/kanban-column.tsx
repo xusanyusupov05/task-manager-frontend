@@ -4,7 +4,7 @@ import {
   EllipsisOutlined,
   PlusOutlined,
 } from "@ant-design/icons";
-import { Button, Dropdown, Flex, Form, Input, Typography } from "antd";
+import { Button, Dropdown, Flex, Form, Input, Select, Typography } from "antd";
 import { useDraggable, useDroppable } from "@dnd-kit/react";
 import { useState } from "react";
 
@@ -38,16 +38,13 @@ export function KanbanColumn({
     id,
   });
 
-  // 2.3 Ustun nomiga qarab tepa chiziq rangini aniqlash
-  const borderStyle = title.toLocaleLowerCase();
-
   // 2.4 Ustun menyusi amallari (O'zgartirish, O'chirish)
   const item = [
     {
       key: 1,
       label: (
         <Typography.Text>
-          <EditOutlined /> O'zgartirish
+          <EditOutlined /> Ta'mirlash
         </Typography.Text>
       ),
     },
@@ -55,7 +52,7 @@ export function KanbanColumn({
       key: 2,
       label: (
         <Typography.Text className="text-red-500">
-          <DeleteOutlined /> O'chirish
+          <DeleteOutlined />Chopish
         </Typography.Text>
       ),
     },
@@ -71,19 +68,7 @@ export function KanbanColumn({
             isDropTarget
               ? "bg-blue-50/80 ring-2 ring-blue-400 ring-dashed"
               : "bg-[#f8fafc] border border-gray-100"
-          } ${isDragging ? "opacity-40 scale-95 rotate-1 shadow-2xl" : ""} ${
-            borderStyle === "dushanbadan boshlaymiz"
-              ? "border-t-4 border-t-blue-500"
-              : borderStyle === "qozonda qaynayapti"
-                ? "border-t-4 border-t-yellow-600"
-                : borderStyle === "ish bitdi"
-                  ? "border-t-4 border-t-green-600"
-                  : borderStyle === "oq soqollar ruxsat bermadi"
-                    ? "border-t-4 border-t-red-600"
-                    : borderStyle === "ko'z tegdi"
-                      ? "border-t-4 border-t-green-900"
-                      : "border-none"
-          }`}
+          } ${isDragging ? "opacity-40 scale-95 rotate-1 shadow-2xl" : ""}`}
         >
           {/* 2.6 Ustun sarlavhasi, soni va sozlamalar */}
           <Flex
@@ -130,10 +115,25 @@ export function KanbanColumn({
           {openCardAdd ? (
             <div className="mt-2 p-3 bg-white rounded-xl border border-gray-200 shadow-sm">
               <Form layout="vertical">
-                <Form.Item className="!mb-3">
+                <Form.Item label={<Typography.Text className="sora text-xs font-semibold">Nima bo'ldi?</Typography.Text>}>
                   <Input
                     placeholder="Yozavering."
                     className="sora text-sm !rounded-lg !border-gray-200 focus:!border-blue-500 h-9"
+                  />
+                </Form.Item>
+                <Form.Item label={<Typography.Text className="sora text-xs font-semibold">Kimga sovg'a qilamz?</Typography.Text>}>
+                  <Select
+                    options={[
+                      { value: "frontend", label: "Frontend" },
+                      { value: "backend", label: "Backend" },
+                      { value: "design", label: "Design" },
+                      { value: "managment", label: "Management" },
+                      { value: "qa", label: "QA" },
+                      { value: "devops", label: "DevOps" },
+                      { value: "mobile", label: "Mobile" },
+                    ]}
+                    className="sora text-sm !rounded-lg !border-gray-200 focus:!border-blue-500 h-9"
+                    defaultValue={"frontend"}
                   />
                 </Form.Item>
                 <Flex vertical gap={6} className="w-full">

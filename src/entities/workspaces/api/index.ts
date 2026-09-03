@@ -9,19 +9,25 @@ export const workspaceApi = baseApi.injectEndpoints({
       query: () => ({
         url: API_MAP.WORKSPACE,
         method: API_METHODS.GET,
-        providesTags: [{ type: "Workspace" }]
-      })
+      }),
+      providesTags: ["Workspace"],
     }),
     postWorkspace: builder.mutation({
       query: (body) => ({
         url: API_MAP.WORKSPACE,
         method: API_METHODS.POST,
         body,
-        invalidatesTags: [{ type: "Workspace" }]
-      })
+      }),
+      invalidatesTags: ["Workspace"],
     }),
-    
+    deleteWorspace: builder.mutation({
+      query:(id:string) => ({
+        url: `${API_MAP.WORKSPACE}/${id}`,
+        method: API_METHODS.DELETE,
+      }),
+      invalidatesTags: ["Workspace"],
+    })
   }),
 });
 
-export const { useGetWorkspacesQuery, usePostWorkspaceMutation } = workspaceApi;
+export const { useGetWorkspacesQuery, usePostWorkspaceMutation, useDeleteWorspaceMutation } = workspaceApi;
