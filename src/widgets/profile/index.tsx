@@ -47,7 +47,7 @@ export default function PersonalProfileMain() {
             className="w-full pt-10 pl-5"
           >
             <Avatar size={140} />
-            <Flex vertical>
+            <Flex vertical gap={10}>
               {/* {role === "admin" ? (
                 <Typography.Text className="sora text-xs font-bold text-[#36a10f] mb-1">
                   ADMIN

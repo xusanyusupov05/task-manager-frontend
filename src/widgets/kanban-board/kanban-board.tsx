@@ -234,7 +234,7 @@ export function KanbanBoard() {
       } else {
         // B) Boshqa ustunga o'tkazish
         const newTargetTasks = [...prev[targetColumnId!].tasks];
-        newTargetTasks.splice(targetIndex, 0, draggedTask!); // Yangi ustunga qo'shish
+        newTargetTasks.splice(targetIndex, 0, draggedTask!);
 
         return {
           ...prev,
@@ -253,7 +253,6 @@ export function KanbanBoard() {
 
   return (
     <Flex vertical className="w-full h-full pt-3">
-      {/* 4.5 Breadcrumb - full-width, containersiz, px-6 */}
       <div className="w-full px-6 mb-3">
         <Breadcrumb
           className="sora"
@@ -308,7 +307,6 @@ export function KanbanBoard() {
           gap={20}
           className="w-full overflow-x-auto px-6 pt-3 pb-6 custom-scrollbar"
         >
-          {/* 4.7 Ustunlar va ularning ichidagi kartalarni birma-bir render qilish */}
           {Object.entries(columns).map(([columnId, column]) => (
             <KanbanColumn
               key={columnId}
@@ -327,7 +325,11 @@ export function KanbanBoard() {
               ))}
             </KanbanColumn>
           ))}
-          <Flex vertical gap={12} className="min-w-[320px] w-[320px] flex-shrink-0">
+          <Flex
+            vertical
+            gap={12}
+            className="min-w-[320px] w-[320px] flex-shrink-0"
+          >
             <Button
               icon={<PlusOutlined />}
               onClick={() => setIsModalOpen((prev) => !prev)}
