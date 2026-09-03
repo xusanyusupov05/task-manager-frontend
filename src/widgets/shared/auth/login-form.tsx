@@ -26,16 +26,28 @@ export default function LoginForm() {
         password: values.password,
       }).unwrap();
 
-      const token = response?.data?.token || response?.token;
-      const user = response?.data?.user || response?.user;
+      const token =
+        (typeof response?.data === "string" ? response.data : null) ||
+        response?.data?.token ||
+        response?.data?.accessToken ||
+        response?.token ||
+        response?.accessToken;
 
-      if (token) {
-        localStorage.setItem("accessToken", token);
-        localStorage.setItem("token", token);
-        dispatch(
-          setCredentials({ user: user?.name ?? values.username, token }),
-        );
+      const user =
+        response?.data?.user ||
+        response?.user ||
+        (typeof response?.data === "object" ? response?.data : null);
+
+      if (!token) {
+        toast.error("Kirish muvaffaqiyatli, lekin serverdan token olinmadi!");
+        return;
       }
+
+      localStorage.setItem("accessToken", token);
+      localStorage.setItem("token", token);
+      dispatch(
+        setCredentials({ user: user?.name ?? values.username, token }),
+      );
       toast.success("Xush kelibsiz! Tizimga muvaffaqiyatli kirdingiz.");
       navigate(ROUTE_PATH.HOME);
     } catch (error: unknown) {

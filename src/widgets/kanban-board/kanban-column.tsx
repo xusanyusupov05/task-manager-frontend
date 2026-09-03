@@ -55,7 +55,6 @@ export function KanbanColumn({
   ];
 
   return (
-    // 2.5 Tashqi droppable va draggable qobiqlar
     <div ref={droppableRef} className="h-full flex-shrink-0">
       <div ref={draggableRef} className="h-full">
         <Flex
@@ -162,7 +161,7 @@ export function KanbanColumn({
               type="dashed"
               icon={<PlusOutlined />}
               className="mt-2 w-full h-10 rounded-xl font-medium sora text-gray-600 hover:!text-blue-600 hover:!border-blue-500"
-            ></Button>
+            />
           )}
         </Flex>
       </div>

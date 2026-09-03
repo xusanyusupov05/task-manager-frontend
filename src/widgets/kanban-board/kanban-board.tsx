@@ -300,7 +300,6 @@ export function KanbanBoard() {
         />
       </div>
 
-      {/* 4.6 Barcha ustunlarni Drag-and-drop qobig'i bilan o'rash */}
       <DragDropProvider onDragEnd={handleDragEnd}>
         <Flex
           align="start"

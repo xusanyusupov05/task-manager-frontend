@@ -26,8 +26,17 @@ export default function AuthForm() {
         password: values.password,
       }).unwrap();
 
-      const token = response?.data?.token || response?.token;
-      const user = response?.data?.user || response?.user;
+      const token =
+        (typeof response?.data === "string" ? response.data : null) ||
+        response?.data?.token ||
+        response?.data?.accessToken ||
+        response?.token ||
+        response?.accessToken;
+
+      const user =
+        response?.data?.user ||
+        response?.user ||
+        (typeof response?.data === "object" ? response?.data : null);
 
       if (token) {
         localStorage.setItem("accessToken", token);
@@ -35,9 +44,12 @@ export default function AuthForm() {
         dispatch(
           setCredentials({ user: user?.name ?? values.username, token }),
         );
+        toast.success("Muvaffaqiyatli ro'yxatdan o'tdingiz!");
+        navigate(ROUTE_PATH.HOME);
+      } else {
+        toast.success("Muvaffaqiyatli ro'yxatdan o'tdingiz! Endi hisobingizga kiring.");
+        navigate(ROUTE_PATH.LOGIN);
       }
-      toast.success("Muvaffaqiyatli ro'yxatdan o'tdingiz!");
-      navigate(ROUTE_PATH.HOME);
     } catch (error: unknown) {
       console.error(error);
       const err = error as { data?: { message?: string }; message?: string };
