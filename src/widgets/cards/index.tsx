@@ -1,15 +1,29 @@
-import { CardList } from "./card-list";
+import { useSearchParams } from "react-router-dom";
+import { CardList, type CardItem } from "./card-list";
 import { CardFilter } from "./filter";
 import { useGetWorkspacesQuery } from "../../entities/workspaces/api";
+
 export function CardsMain() {
-  const { data: workspaces, isLoading } = useGetWorkspacesQuery({ refetchOnMountOrArgChange: true });
+  const { data: workspaces, isLoading } = useGetWorkspacesQuery({
+    refetchOnMountOrArgChange: true,
+  });
+  const [searchParams] = useSearchParams();
+  const search = searchParams.get("search")?.toLowerCase().trim() || "";
+
+  const filteredData = workspaces?.data?.filter((item: CardItem) => {
+    if (!search) return true;
+    return item.title?.toLowerCase().includes(search);
+  });
 
   return (
     <div className="w-full">
       <div className="flex justify-between items-center !m-0">
         <CardFilter />
       </div>
-      <CardList items={workspaces} isLoading={isLoading} />
+      <CardList
+        items={{ data: filteredData }}
+        isLoading={isLoading}
+      />
     </div>
   );
 }

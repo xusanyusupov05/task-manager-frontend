@@ -6,8 +6,10 @@ import {
   InfoCircleOutlined,
 } from "@ant-design/icons";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { useDeleteWorspaceMutation } from "@/entities/workspaces";
 import { ConfirmDialog } from "@/shared/ui/confirm-dialog";
+import { ROUTE_PATH } from "@/shared/consts/routes-path";
 import { toast } from "sonner";
 
 const { Text } = Typography;
@@ -25,10 +27,15 @@ export function CreateCard({
   description,
   color = "linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%)",
 }: CreateCardProps) {
+  const navigate = useNavigate();
   const [modal, setModal] = useState(false);
   const [confirmOpen, setConfirmOpen] = useState(false);
   const admin = "admin";
   const [deleteWorkspace, { isLoading }] = useDeleteWorspaceMutation();
+
+  const handleCardClick = () => {
+    navigate(`${ROUTE_PATH.KANBAN_BOARD}?workspaceId=${id}`);
+  };
 
   async function handleDelteMutation(targetId: string) {
     try {
@@ -82,7 +89,8 @@ export function CreateCard({
   return (
     <Flex
       vertical
-      className="w-full !h-[240px] bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100 mb-6 group cursor-pointer relative justify-between"
+      onClick={handleCardClick}
+      className="w-full !h-[240px] bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 border border-gray-100 mb-6 group cursor-pointer relative justify-between"
     >
       <div className="w-full h-[140px] relative overflow-hidden bg-gray-50 flex-shrink-0">
         <div

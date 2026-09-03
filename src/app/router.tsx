@@ -2,6 +2,7 @@ import { createBrowserRouter } from "react-router-dom";
 import MainLayout from "@/pages/layout";
 import { routeList } from "@/shared/consts/routes-list";
 import PersonalProfile from "@/pages/profile";
+import { KanbanBoardPage } from "@/pages/kanban-board";
 import { ROUTE_PATH } from "@/shared/consts/routes-path";
 import { AuthPage } from "@/pages/auth";
 import { LoginPage } from "@/pages/login";
@@ -24,6 +25,10 @@ export const router = createBrowserRouter([
         index: route.key === "/",
         element: route.element,
       })),
+      {
+        path: ROUTE_PATH.KANBAN_BOARD.replace(/^\//, ""),
+        element: <KanbanBoardPage />,
+      },
       {
         path: ROUTE_PATH.PROFILE.replace(/^\//, ""),
         element: <PersonalProfile />,

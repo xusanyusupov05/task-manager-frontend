@@ -1,11 +1,19 @@
 import { DragDropProvider, type DragEndEvent } from "@dnd-kit/react";
 import { KanbanColumn } from "@/widgets/kanban-board/kanban-column";
 import { TaskCard } from "@/widgets/kanban-board/task-card";
-import { Flex } from "antd";
+import { Breadcrumb, Button, Flex, Typography } from "antd";
 import { useState } from "react";
+import { Link } from "react-router-dom";
+import {
+  PlusOutlined,
+  HomeOutlined,
+  AppstoreOutlined,
+} from "@ant-design/icons";
+import { ROUTE_PATH } from "@/shared/consts/routes-path";
+import { KanbanCreate } from "@/widgets/kanban-board/kanban-create";
 
 interface Task {
-  id: string; 
+  id: string;
   title: string;
   labels: string[];
   members: string[];
@@ -94,6 +102,7 @@ const INITIAL_DATA: ColumnsState = {
 export function KanbanBoard() {
   // 4.1 Ustunlar va undagi kartalar holatini saqlovchi state
   const [columns, setColumns] = useState<ColumnsState>(INITIAL_DATA);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   // 4.2 Drag-and-drop yakunlanganda (karta yoki ustun qo'yib yuborilganda) ishlaydigan asosiy funksiya
   const handleDragEnd = (event: DragEndEvent) => {
@@ -131,9 +140,16 @@ export function KanbanBoard() {
       setColumns((prev) => {
         const entries = Object.entries(prev);
         const sourceIndex = entries.findIndex(([colId]) => colId === sourceId);
-        const targetIndex = entries.findIndex(([colId]) => colId === targetColumnId);
+        const targetIndex = entries.findIndex(
+          ([colId]) => colId === targetColumnId,
+        );
 
-        if (sourceIndex === -1 || targetIndex === -1 || sourceIndex === targetIndex) return prev;
+        if (
+          sourceIndex === -1 ||
+          targetIndex === -1 ||
+          sourceIndex === targetIndex
+        )
+          return prev;
 
         const newEntries = [...entries];
         const [movedColumn] = newEntries.splice(sourceIndex, 1);
@@ -236,33 +252,95 @@ export function KanbanBoard() {
   };
 
   return (
-    // 4.6 Barcha ustunlarni Drag-and-drop qobig'i bilan o'rash
-    <DragDropProvider onDragEnd={handleDragEnd}>
-      <Flex
-        align="start"
-        gap={20}
-        className="w-full h-full overflow-x-auto p-4"
-      >
-        {/* 4.7 Ustunlar va ularning ichidagi kartalarni birma-bir render qilish */}
-        {Object.entries(columns).map(([columnId, column]) => (
-          <KanbanColumn
-            key={columnId}
-            id={columnId}
-            title={column.title}
-            count={column.tasks.length}
-          >
-            {column.tasks.map((task) => (
-              <TaskCard
-                key={task.id}
-                id={task.id}
-                title={task.title}
-                labels={task.labels}
-                members={task.members}
-              />
-            ))}
-          </KanbanColumn>
-        ))}
-      </Flex>
-    </DragDropProvider>
+    <Flex vertical className="w-full h-full pt-3">
+      {/* 4.5 Breadcrumb - full-width, containersiz, px-6 */}
+      <div className="w-full px-6 mb-3">
+        <Breadcrumb
+          className="sora"
+          items={[
+            {
+              title: (
+                <Link to={ROUTE_PATH.HOME}>
+                  <Flex
+                    align="center"
+                    gap={6}
+                    className="text-gray-500 hover:text-black"
+                  >
+                    <HomeOutlined />
+                    <Typography.Text className="sora !text-gray-500 hover:!text-black">
+                      Ayvon
+                    </Typography.Text>
+                  </Flex>
+                </Link>
+              ),
+            },
+            {
+              title: (
+                <Link to={ROUTE_PATH.KANBAN_MAIN}>
+                  <Flex
+                    align="center"
+                    gap={6}
+                    className="text-gray-500 hover:text-black"
+                  >
+                    <AppstoreOutlined />
+                    <Typography.Text className="sora !text-gray-500 hover:!text-black">
+                      G'alvalar
+                    </Typography.Text>
+                  </Flex>
+                </Link>
+              ),
+            },
+            {
+              title: (
+                <Typography.Text className="font-semibold text-slate-800 sora">
+                  Bosh og'riqlar
+                </Typography.Text>
+              ),
+            },
+          ]}
+        />
+      </div>
+
+      {/* 4.6 Barcha ustunlarni Drag-and-drop qobig'i bilan o'rash */}
+      <DragDropProvider onDragEnd={handleDragEnd}>
+        <Flex
+          align="start"
+          gap={20}
+          className="w-full overflow-x-auto px-6 pt-3 pb-6 custom-scrollbar"
+        >
+          {/* 4.7 Ustunlar va ularning ichidagi kartalarni birma-bir render qilish */}
+          {Object.entries(columns).map(([columnId, column]) => (
+            <KanbanColumn
+              key={columnId}
+              id={columnId}
+              title={column.title}
+              count={column.tasks.length}
+            >
+              {column.tasks.map((task) => (
+                <TaskCard
+                  key={task.id}
+                  id={task.id}
+                  title={task.title}
+                  labels={task.labels}
+                  members={task.members}
+                />
+              ))}
+            </KanbanColumn>
+          ))}
+          <Flex vertical gap={12} className="min-w-[320px] w-[320px] flex-shrink-0">
+            <Button
+              icon={<PlusOutlined />}
+              onClick={() => setIsModalOpen((prev) => !prev)}
+              className="w-full !h-[52px] !bg-[#f8fafc] !shadow-xl !border !border-dashed !border-gray-200 hover:!border-gray-300 hover:!bg-white !text-slate-700 hover:!text-black !rounded-2xl cursor-pointer sora font-semibold text-[15px] flex items-center justify-center gap-2 active:scale-[0.99]"
+            >
+              Bu safar nima deymiz?
+            </Button>
+            {isModalOpen && (
+              <KanbanCreate onClose={() => setIsModalOpen(false)} />
+            )}
+          </Flex>
+        </Flex>
+      </DragDropProvider>
+    </Flex>
   );
 }

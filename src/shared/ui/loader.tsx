@@ -94,9 +94,9 @@ export function Loader({
   text = "Choylashamiz...",
   className = "",
   textClassName = "text-xl font-semibold sora",
-  duration = 1.3,
+duration = 1.3,
   baseColor = "#9ca3af",
-  shimmerColor = "#0D74F9",
+  shimmerColor = "#C2C2C2",
 }: LoaderProps) {
   return (
     <div className={`w-full py-10 flex items-center justify-center ${className}`}>

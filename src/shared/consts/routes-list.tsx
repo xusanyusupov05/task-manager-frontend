@@ -4,8 +4,6 @@ import HomePage from "@/pages/main";
 import { ROUTE_PATH } from "./routes-path";
 import { Typography } from "antd";
 import CardsPage from "@/pages/cards";
-import { KanbanBoardPage } from "@/pages/kanban-board";
-
 export interface IRouteChild {
   key?: string;
   index?: boolean;
@@ -40,16 +38,6 @@ export const routeList: IMenu[] = [
     ),
     icon: <AppstoreOutlined className="!text-xl !text-black" />,
     element: <CardsPage />,
-  },
-  {
-    key: ROUTE_PATH.KANBAN_BOARD,
-    labelKey: (
-      <Typography.Text className="!text-xl rubik">
-        Bosh og'riqlar
-      </Typography.Text>
-    ),
-    icon: <AppstoreOutlined className="!text-xl !text-black" />,
-    element: <KanbanBoardPage />,
   },
 ];
 

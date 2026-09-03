@@ -38,7 +38,7 @@ const statusList: StatusItem[] = [
     range: "101 - 200 ta vazifa",
   },
   {
-    label: "Katta aka",
+    label: "Oqsoqol",
     className: "!bg-yellow-500 !text-black !border !border-black font-bold shadow-sm",
     range: "201+ ta vazifa",
   },

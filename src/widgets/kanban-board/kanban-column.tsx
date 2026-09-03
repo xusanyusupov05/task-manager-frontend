@@ -52,7 +52,8 @@ export function KanbanColumn({
       key: 2,
       label: (
         <Typography.Text className="text-red-500">
-          <DeleteOutlined />Chopish
+          <DeleteOutlined />
+          Chopish
         </Typography.Text>
       ),
     },
@@ -64,7 +65,7 @@ export function KanbanColumn({
       <div ref={draggableRef} className="h-full">
         <Flex
           vertical
-          className={`min-w-[320px] w-[320px] h-[calc(100vh-145px)] rounded-2xl p-4 shadow-xl overflow-hidden transition-all duration-200 ${
+          className={`min-w-[320px] w-[320px] h-[calc(100vh-230px)] rounded-2xl p-4 shadow-xl overflow-hidden transition-all duration-200 ${
             isDropTarget
               ? "bg-blue-50/80 ring-2 ring-blue-400 ring-dashed"
               : "bg-[#f8fafc] border border-gray-100"
@@ -115,13 +116,25 @@ export function KanbanColumn({
           {openCardAdd ? (
             <div className="mt-2 p-3 bg-white rounded-xl border border-gray-200 shadow-sm">
               <Form layout="vertical">
-                <Form.Item label={<Typography.Text className="sora text-xs font-semibold">Nima bo'ldi?</Typography.Text>}>
+                <Form.Item
+                  label={
+                    <Typography.Text className="sora text-xs font-semibold">
+                      Nima bo'ldi?
+                    </Typography.Text>
+                  }
+                >
                   <Input
                     placeholder="Yozavering."
                     className="sora text-sm !rounded-lg !border-gray-200 focus:!border-blue-500 h-9"
                   />
                 </Form.Item>
-                <Form.Item label={<Typography.Text className="sora text-xs font-semibold">Kimga sovg'a qilamz?</Typography.Text>}>
+                <Form.Item
+                  label={
+                    <Typography.Text className="sora text-xs font-semibold">
+                      Kimga sovg'a qilamz?
+                    </Typography.Text>
+                  }
+                >
                   <Select
                     options={[
                       { value: "frontend", label: "Frontend" },
@@ -139,7 +152,7 @@ export function KanbanColumn({
                 <Flex vertical gap={6} className="w-full">
                   <Button
                     type="primary"
-                    className="sora text-xs font-semibold rounded-lg bg-blue-600 hover:!bg-blue-500 shadow-sm w-full h-9"
+                    className="sora text-xs font-semibold rounded-lg bg-gray-500 hover:!bg-gray-700 shadow-sm w-full h-9"
                   >
                     Buni ham dushanbadan qilamiz!
                   </Button>
@@ -159,10 +172,8 @@ export function KanbanColumn({
               type="dashed"
               icon={<PlusOutlined />}
               className="mt-2 w-full h-10 rounded-xl font-medium sora text-gray-600 hover:!text-blue-600 hover:!border-blue-500"
-            >
-            </Button>
+            ></Button>
           )}
-
         </Flex>
       </div>
     </div>
