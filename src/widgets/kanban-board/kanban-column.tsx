@@ -8,28 +8,24 @@ import { Button, Dropdown, Flex, Form, Input, Select, Typography } from "antd";
 import { useDraggable, useDroppable } from "@dnd-kit/react";
 import { useState } from "react";
 
-// 1. Komponent qabul qiladigan props turlari
 interface KanbanColumnProps {
-  id: string; // Ustunning unikal ID-si
-  title: string; // Ustun nomi (masalan: Todo, In Progress)
-  count?: number; // Ustundagi kartalar soni
-  children?: React.ReactNode; // Ichidagi task kartalari (TaskCard)
+  id: string;
+  title: string;
+  count?: number;
+  children?: React.ReactNode;
 }
 
-// 2. Asosiy Kanban ustuni komponenti
 export function KanbanColumn({
   id,
   title,
   count = 0,
   children,
 }: KanbanColumnProps) {
-  // 2.1 Drag-and-drop: Ustunni boshqa elementlarni qabul qiluvchi (droppable) qilish
   const { ref: droppableRef, isDropTarget } = useDroppable({
     id,
   });
   const [openCardAdd, setOpenCardAdd] = useState(false);
 
-  // 2.2 Drag-and-drop: Ustunning o'zini ham suriladigan (draggable) qilish
   const {
     ref: draggableRef,
     isDragging,
@@ -38,7 +34,6 @@ export function KanbanColumn({
     id,
   });
 
-  // 2.4 Ustun menyusi amallari (O'zgartirish, O'chirish)
   const item = [
     {
       key: 1,
@@ -65,19 +60,16 @@ export function KanbanColumn({
       <div ref={draggableRef} className="h-full">
         <Flex
           vertical
-          className={`min-w-[320px] w-[320px] h-[calc(100vh-190px)] rounded-2xl p-4 shadow-xl overflow-hidden transition-all duration-200 ${
-            isDropTarget
+          className={`min-w-[320px] w-[320px] h-[calc(100vh-190px)] rounded-2xl p-4 shadow-xl overflow-hidden transition-all duration-200 ${isDropTarget
               ? "bg-blue-50/80 ring-2 ring-blue-400 ring-dashed"
               : "bg-[#f8fafc] border border-gray-100"
-          } ${isDragging ? "opacity-40 scale-95 rotate-1 shadow-2xl" : ""}`}
+            } ${isDragging ? "opacity-40 scale-95 rotate-1 shadow-2xl" : ""}`}
         >
-          {/* 2.6 Ustun sarlavhasi, soni va sozlamalar */}
           <Flex
             align="center"
             justify="space-between"
             className="mb-4 select-none"
           >
-            {/* Faqat sarlavha va son qismi surish tutqichi (handleRef) bo'ladi */}
             <Flex
               ref={handleRef}
               align="center"
@@ -92,7 +84,6 @@ export function KanbanColumn({
               </span>
             </Flex>
 
-            {/* 3 nuqta menyusi handleRef dan tashqarida, DnD xalal bermaydi */}
             <Dropdown
               menu={{ items: item }}
               trigger={["click"]}
@@ -108,7 +99,6 @@ export function KanbanColumn({
             </Dropdown>
           </Flex>
 
-          {/* 2.7 Task kartalari joylashadigan skroll qismi */}
           <div className="flex-1 overflow-y-auto overflow-x-hidden flex flex-col gap-3 pr-1 pb-2 custom-scrollbar">
             {children}
           </div>
@@ -179,4 +169,3 @@ export function KanbanColumn({
     </div>
   );
 }
-
