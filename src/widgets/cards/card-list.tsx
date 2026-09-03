@@ -38,6 +38,7 @@ export function CardList({ items, isLoading = false }: CardListProps) {
                 title={item.title}
                 description={item.description}
                 color={item.bgColor || item.color}
+                createdAt={item.createdAt}
               />
             </Col>
           ))

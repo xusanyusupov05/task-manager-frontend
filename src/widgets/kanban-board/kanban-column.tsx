@@ -65,7 +65,7 @@ export function KanbanColumn({
       <div ref={draggableRef} className="h-full">
         <Flex
           vertical
-          className={`min-w-[320px] w-[320px] h-[calc(100vh-230px)] rounded-2xl p-4 shadow-xl overflow-hidden transition-all duration-200 ${
+          className={`min-w-[320px] w-[320px] h-[calc(100vh-190px)] rounded-2xl p-4 shadow-xl overflow-hidden transition-all duration-200 ${
             isDropTarget
               ? "bg-blue-50/80 ring-2 ring-blue-400 ring-dashed"
               : "bg-[#f8fafc] border border-gray-100"
@@ -179,3 +179,4 @@ export function KanbanColumn({
     </div>
   );
 }
+

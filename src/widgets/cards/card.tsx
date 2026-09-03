@@ -1,5 +1,6 @@
-import { Button, Dropdown, Flex, Typography, Modal, Tooltip } from "antd";
+import { Button, Dropdown, Flex, Typography, Modal, Tooltip, type MenuProps } from "antd";
 import {
+  CalendarOutlined,
   DeleteOutlined,
   EditOutlined,
   EllipsisOutlined,
@@ -7,6 +8,7 @@ import {
 } from "@ant-design/icons";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import dayjs from "dayjs";
 import { useDeleteWorspaceMutation } from "@/entities/workspaces";
 import { ConfirmDialog } from "@/shared/ui/confirm-dialog";
 import { ROUTE_PATH } from "@/shared/consts/routes-path";
@@ -18,6 +20,7 @@ interface CreateCardProps {
   id: string;
   title: string;
   description?: string;
+  createdAt?: string | number | Date;
   color?: string;
 }
 
@@ -25,6 +28,7 @@ export function CreateCard({
   id,
   title,
   description,
+  createdAt,
   color = "linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%)",
 }: CreateCardProps) {
   const navigate = useNavigate();
@@ -50,7 +54,7 @@ export function CreateCard({
     }
   }
 
-  const items = [
+  const items: NonNullable<MenuProps["items"]> = [
     {
       key: "1",
       label: (
@@ -59,7 +63,10 @@ export function CreateCard({
         </Typography.Text>
       ),
       icon: <DeleteOutlined className="text-red-500 !text-[16px]" />,
-      onClick: () => setConfirmOpen(true),
+      onClick: ({ domEvent }) => {
+        domEvent.stopPropagation();
+        setConfirmOpen(true);
+      },
     },
     {
       key: "2",
@@ -69,22 +76,27 @@ export function CreateCard({
         </Typography.Text>
       ),
       icon: <EditOutlined className="text-yellow-500 !text-[16px]" />,
+      onClick: ({ domEvent }) => {
+        domEvent.stopPropagation();
+      },
     },
-    ...(description
-      ? [
-          {
-            key: "3",
-            label: (
-              <Typography.Text className="text-[15px] font-medium !text-slate-800 rubik">
-                Gapning indallosi
-              </Typography.Text>
-            ),
-            icon: <InfoCircleOutlined className="text-blue-500 !text-[16px]" />,
-            onClick: () => setModal(true),
-          },
-        ]
-      : []),
   ];
+
+  if (description) {
+    items.push({
+      key: "3",
+      label: (
+        <Typography.Text className="text-[15px] font-medium !text-slate-800 rubik">
+          Gapning indallosi
+        </Typography.Text>
+      ),
+      icon: <InfoCircleOutlined className="text-blue-500 !text-[16px]" />,
+      onClick: ({ domEvent }) => {
+        domEvent.stopPropagation();
+        setModal(true);
+      },
+    });
+  }
 
   return (
     <Flex
@@ -115,45 +127,74 @@ export function CreateCard({
         </Tooltip>
 
         {admin === "admin" ? (
-          <Dropdown menu={{ items }} trigger={["click"]}>
-            <Button
-              type="text"
-              className="!w-8 !h-8 !p-0 flex-shrink-0 flex items-center justify-center !border !border-gray-300 rounded-lg hover:!bg-gray-100 !text-gray-500 hover:!text-black"
-              icon={<EllipsisOutlined className="text-base" />}
-              onClick={(e) => e.stopPropagation()}
-            />
-          </Dropdown>
+          <div onClick={(e) => e.stopPropagation()}>
+            <Dropdown
+              menu={{
+                items,
+                onClick: ({ domEvent }) => {
+                  domEvent?.stopPropagation?.();
+                },
+              }}
+              trigger={["click"]}
+            >
+              <Button
+                type="text"
+                className="!w-8 !h-8 !p-0 flex-shrink-0 flex items-center justify-center !border !border-gray-300 rounded-lg hover:!bg-gray-100 !text-gray-500 hover:!text-black"
+                icon={<EllipsisOutlined className="text-base" />}
+                onClick={(e) => e.stopPropagation()}
+              />
+            </Dropdown>
+          </div>
         ) : null}
       </div>
 
-      <Modal
-        title={
-          <span className="sora font-bold text-[18px]">
-            Gapning indallosi akalar
-          </span>
-        }
-        open={modal}
-        onCancel={() => setModal(false)}
-        styles={{ mask: { backdropFilter: "blur(15px)" } }}
-        className="w-[350px]"
-        footer={null}
-      >
-        <Tooltip title={description}>
-          <Typography.Text className="rubik">{description}</Typography.Text>
-        </Tooltip>
-      </Modal>
+      <div onClick={(e) => e.stopPropagation()}>
+        <Modal
+          title={
+            <span className="sora font-bold text-[18px]">
+              Gapning indallosi akalar
+            </span>
+          }
+          open={modal}
+          onCancel={() => setModal(false)}
+          styles={{ mask: { backdropFilter: "blur(15px)" } }}
+          className="w-[350px]"
+          footer={null}
+        >
+          <div className="flex flex-col gap-3 pt-3">
+            {createdAt && (
+              <div className="flex items-center justify-between bg-slate-50 border border-slate-100 px-3.5 py-2.5 rounded-xl text-xs">
+                <span className="text-slate-500 rubik flex items-center gap-1.5 font-medium text-[16px]">
+                  <CalendarOutlined className="text-blue-500 text-[18px]" />
+                  G'alvaning yaratilishi:
+                </span>
+                <span className="text-slate-800 font-semibold rubik bg-white px-2 py-0.5 rounded-md border border-slate-200/60 shadow-xs">
+                  {dayjs(createdAt).format("DD.MM.YYYY")}
+                </span>
+              </div>
+            )}
+            {description && (
+              <div className="bg-gray-50/70 p-3.5 rounded-xl border border-gray-100">
+                <Typography.Text className="rubik text-gray-700 text-sm leading-relaxed block">
+                  {description}
+                </Typography.Text>
+              </div>
+            )}
+          </div>
+        </Modal>
 
-      <ConfirmDialog
-        open={confirmOpen}
-        type="error"
-        title="Rostdan ham bu g'alvani chopmoqchimisiz?"
-        description="Bu g'alvani chopib tashlasangiz, unga tegishli barcha topshiriqlar ham butunlay yo'qoladi."
-        cancelText="Tursin, tegmayman"
-        confirmText="Ha, chopilsin"
-        onCancel={() => setConfirmOpen(false)}
-        loading={isLoading}
-        onConfirm={() => handleDelteMutation(id)}
-      />
+        <ConfirmDialog
+          open={confirmOpen}
+          type="error"
+          title="Rostdan ham bu g'alvani chopmoqchimisiz?"
+          description="Bu g'alvani chopib tashlasangiz, unga tegishli barcha topshiriqlar ham butunlay yo'qoladi."
+          cancelText="Tursin, tegmayman"
+          confirmText="Ha, chopilsin"
+          onCancel={() => setConfirmOpen(false)}
+          loading={isLoading}
+          onConfirm={() => handleDelteMutation(id)}
+        />
+      </div>
     </Flex>
   );
 }
