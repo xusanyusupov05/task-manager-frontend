@@ -3,9 +3,17 @@ import { Link, useNavigate } from "react-router-dom";
 import { ROUTE_PATH } from "@/shared/consts/routes-path";
 import { LockOutlined, UserOutlined } from "@ant-design/icons";
 import { useLoginUserMutation } from "@/entities/auth/api";
+import { useLazyGetMeQuery } from "@/entities/me";
 import { useDispatch } from "react-redux";
 import { setCredentials } from "@/app/loginSlice";
 import { toast } from "sonner";
+
+interface ApiErrorResponse {
+  data?: {
+    message?: string;
+  };
+  message?: string;
+}
 
 interface LoginFormValues {
   username: string;
@@ -16,6 +24,7 @@ const logo = "/assets/images-removebg-preview.png";
 
 export default function LoginForm() {
   const [loginUser, { isLoading }] = useLoginUserMutation();
+  const [getMe, { isLoading: isMeLoading }] = useLazyGetMeQuery();
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -31,20 +40,38 @@ export default function LoginForm() {
       if (token) {
         localStorage.setItem("accessToken", token);
         localStorage.setItem("token", token);
+      }
+
+      let fullName = user?.fullName;
+      try {
+        const meRes = await getMe().unwrap();
+        fullName = meRes?.data?.fullName;
+      } catch {
+        console.log("Profil ma'lumotlarni olishda xatolik")
+      }
+
+      const displayName = fullName || user?.name || values.username;
+
+      if (token) {
         dispatch(
-          setCredentials({ user: user?.name ?? values.username, token }),
+          setCredentials({ user: displayName, token }),
         );
       }
 
-      toast.success("Xush kelibsiz! Tizimga muvaffaqiyatli kirdingiz.");
+      toast(`Va nixoyat keldilar ${displayName[0].toUpperCase() + displayName.slice(1)}!`, {
+        position: "top-right",
+      });
       navigate(ROUTE_PATH.HOME);
     } catch (error) {
       console.error(error);
+      const apiError = error as ApiErrorResponse;
       const message =
-        error?.data?.message ||
-        error?.message ||
+        apiError?.data?.message ||
+        apiError?.message ||
         "Kirishda xatolik yuz berdi. Ism yoki parolni tekshiring!";
-      toast.error(message);
+      toast.error(message, {
+        position: "top-right",
+      });
     }
   };
 
@@ -117,7 +144,7 @@ export default function LoginForm() {
 
           <Form.Item className="!mb-0">
             <Button
-              loading={isLoading}
+              loading={isLoading || isMeLoading}
               htmlType="submit"
               className="w-full h-12 rounded-xl bg-slate-900 !border-0 text-white font-medium text-lg sora shadow-md shadow-slate-900/20 hover:bg-slate-800 hover:-translate-y-0.5 active:translate-y-0 transition-all duration-300"
             >

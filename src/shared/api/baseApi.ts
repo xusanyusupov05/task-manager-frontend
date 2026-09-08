@@ -29,6 +29,6 @@ export const baseApi = createApi({
   endpoints: () => ({}),
   tagTypes:[
     "Workspace",
-    
+    "Workspace-columns"
   ]
 })

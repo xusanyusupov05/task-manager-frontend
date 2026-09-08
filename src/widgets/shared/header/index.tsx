@@ -1,5 +1,5 @@
 import { UserOutlined } from "@ant-design/icons";
-import { Flex, Image, Layout, Menu, Typography, type MenuProps } from "antd";
+import { Flex, Image, Layout, Menu, Typography } from "antd";
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import { useSidebarRoutes } from "@/shared/hooks/useSidebarRoutes";
 import { ROUTE_PATH } from "@/shared/consts/routes-path";
@@ -8,8 +8,6 @@ import { Container } from "../../../shared/ui/container";
 const logo = "/assets/images-removebg-preview.png";
 
 const { Header: AntHeader } = Layout;
-
-type MenuItem = Required<MenuProps>["items"][number];
 
 export const Header = () => {
   const navigate = useNavigate();
@@ -42,7 +40,7 @@ export const Header = () => {
             theme="light"
             mode="horizontal"
             selectedKeys={[location.pathname]}
-            items={menuItems as unknown as MenuItem[]}
+            items={menuItems}
             onClick={({ key }) => navigate(key)}
             className="border-none bg-transparent min-w-[300px] flex justify-center"
           />

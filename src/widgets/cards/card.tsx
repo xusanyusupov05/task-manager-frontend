@@ -9,7 +9,7 @@ import {
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import dayjs from "dayjs";
-import { useDeleteWorspaceMutation } from "@/entities/workspaces";
+import { useDeleteWorkspaceMutation } from "@/entities/workspaces";
 import { ConfirmDialog } from "@/shared/ui/confirm-dialog";
 import { ROUTE_PATH } from "@/shared/consts/routes-path";
 import { toast } from "sonner";
@@ -35,9 +35,10 @@ export function CreateCard({
   const [modal, setModal] = useState(false);
   const [confirmOpen, setConfirmOpen] = useState(false);
   const admin = "admin";
-  const [deleteWorkspace, { isLoading }] = useDeleteWorspaceMutation();
+  const [deleteWorkspace, { isLoading }] = useDeleteWorkspaceMutation();
 
   const handleCardClick = () => {
+    if (confirmOpen || modal) return;
     navigate(`${ROUTE_PATH.KANBAN_BOARD}?workspaceId=${id}`);
   };
 

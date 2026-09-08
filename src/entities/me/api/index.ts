@@ -25,4 +25,4 @@ const meApi = baseApi.injectEndpoints({
   }),
 });
 
-export const { useGetMeQuery } = meApi;
+export const { useGetMeQuery, useLazyGetMeQuery } = meApi;

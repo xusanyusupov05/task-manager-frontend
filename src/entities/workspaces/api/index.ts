@@ -20,14 +20,26 @@ export const workspaceApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["Workspace"],
     }),
-    deleteWorspace: builder.mutation({
-      query:(id:string) => ({
+    deleteWorkspace: builder.mutation({
+      query: (id: string) => ({
         url: `${API_MAP.WORKSPACE}/${id}`,
         method: API_METHODS.DELETE,
       }),
       invalidatesTags: ["Workspace"],
-    })
+    }),
+    deleteWorspace: builder.mutation({
+      query: (id: string) => ({
+        url: `${API_MAP.WORKSPACE}/${id}`,
+        method: API_METHODS.DELETE,
+      }),
+      invalidatesTags: ["Workspace"],
+    }),
   }),
 });
 
-export const { useGetWorkspacesQuery, usePostWorkspaceMutation, useDeleteWorspaceMutation } = workspaceApi;
+export const {
+  useGetWorkspacesQuery,
+  usePostWorkspaceMutation,
+  useDeleteWorkspaceMutation,
+  useDeleteWorspaceMutation,
+} = workspaceApi;
