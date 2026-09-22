@@ -2,7 +2,6 @@ import { API_METHODS } from "@/shared/api/api-metods";
 import { API_MAP } from "@/shared/api/apiMap";
 import { baseApi } from "@/shared/api/baseApi";
 
-
 export const workspaceApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     getWorkspaces: builder.query({

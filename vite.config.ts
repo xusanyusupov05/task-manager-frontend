@@ -4,10 +4,7 @@ import babel from "@rolldown/plugin-babel";
 import path from "path";
 
 export default defineConfig({
-  plugins: [
-    react(),
-    babel({ presets: [reactCompilerPreset()] }),
-  ],
+  plugins: [react(), babel({ presets: [reactCompilerPreset()] })],
 
   resolve: {
     alias: {
@@ -19,6 +16,6 @@ export default defineConfig({
     },
   },
   server: {
-    host: true
-  }
+    host: true,
+  },
 });

@@ -15,17 +15,13 @@ export function CardsMain() {
     return item.title?.toLowerCase().includes(search);
   });
   console.log(workspaces);
-  
 
   return (
     <div className="w-full">
       <div className="flex justify-between items-center !m-0">
         <CardFilter />
       </div>
-      <CardList
-        items={{ data: filteredData }}
-        isLoading={isLoading}
-      />
+      <CardList items={{ data: filteredData }} isLoading={isLoading} />
     </div>
   );
 }

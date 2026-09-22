@@ -53,14 +53,15 @@ export default function AuthForm() {
       const displayName = fullName || user?.name || values.username;
 
       if (token) {
-        dispatch(
-          setCredentials({ user: displayName, token }),
-        );
+        dispatch(setCredentials({ user: displayName, token }));
       }
 
-      toast.success(`Bitta siz kam edinggiz keling ${displayName[0].toUpperCase() + displayName.slice(1)}!`, {
-        position: "top-right",
-      });
+      toast.success(
+        `Bitta siz kam edinggiz keling ${displayName[0].toUpperCase() + displayName.slice(1)}!`,
+        {
+          position: "top-right",
+        },
+      );
       navigate(ROUTE_PATH.HOME);
     } catch (error) {
       console.error(error);

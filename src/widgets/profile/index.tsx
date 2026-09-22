@@ -28,7 +28,7 @@ export default function PersonalProfileMain() {
     {
       key: "2",
       label: "Kim kim o'zi ?",
-      children: <AboutStatus/>,
+      children: <AboutStatus />,
     },
   ];
 
@@ -41,11 +41,7 @@ export default function PersonalProfileMain() {
           align="center"
           className="w-full h-full relative min-h-[200px]"
         >
-          <Flex
-            align="center"
-            gap={24}
-            className="w-full pt-10 pl-5"
-          >
+          <Flex align="center" gap={24} className="w-full pt-10 pl-5">
             <Avatar size={140} />
             <Flex vertical gap={10}>
               {/* {role === "admin" ? (
@@ -59,7 +55,8 @@ export default function PersonalProfileMain() {
               )} */}
               {data?.data?.fullName && (
                 <Typography.Text className="text-3xl sora font-bold">
-                  {data.data.fullName.split("")[0].toUpperCase() + data.data.fullName.slice(1).toLowerCase()}
+                  {data.data.fullName.split("")[0].toUpperCase() +
+                    data.data.fullName.slice(1).toLowerCase()}
                 </Typography.Text>
               )}
               <ProfileStatus taskCount={20} />

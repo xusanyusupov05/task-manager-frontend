@@ -3,5 +3,4 @@ interface AuthRequest {
   password: string;
 }
 
-
 export type { AuthRequest };

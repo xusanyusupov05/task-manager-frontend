@@ -31,7 +31,7 @@ export default function LoginForm() {
   const onFinish = async (values: LoginFormValues) => {
     try {
       const response = await loginUser({
-        name: values.username,
+        name: values.username.trim(),
         password: values.password,
       }).unwrap();
 
@@ -47,20 +47,21 @@ export default function LoginForm() {
         const meRes = await getMe().unwrap();
         fullName = meRes?.data?.fullName;
       } catch {
-        console.log("Profil ma'lumotlarni olishda xatolik")
+        console.log("Profil ma'lumotlarni olishda xatolik");
       }
 
       const displayName = fullName || user?.name || values.username;
 
       if (token) {
-        dispatch(
-          setCredentials({ user: displayName, token }),
-        );
+        dispatch(setCredentials({ user: displayName, token }));
       }
 
-      toast(`Va nixoyat keldilar ${displayName[0].toUpperCase() + displayName.slice(1)}!`, {
-        position: "top-right",
-      });
+      toast(
+        `Va nixoyat keldilar ${displayName[0].toUpperCase() + displayName.slice(1)}!`,
+        {
+          position: "top-right",
+        },
+      );
       navigate(ROUTE_PATH.HOME);
     } catch (error) {
       console.error(error);
