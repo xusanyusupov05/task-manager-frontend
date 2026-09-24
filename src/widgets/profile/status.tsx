@@ -9,19 +9,22 @@ const getNicknameConfig = (taskCount: number): NicknameConfig => {
   if (taskCount === 0) {
     return {
       label: "Begona bola",
-      className: "!bg-[#F0FDF4] !text-emerald-600 !border font-semibold !border-emerald-200",
+      className:
+        "!bg-[#F0FDF4] !text-emerald-600 !border font-semibold !border-emerald-200",
     };
   }
   if (taskCount >= 1 && taskCount <= 10) {
     return {
       label: "Do'konga chopuvchi",
-      className: "!bg-[#DCFCE7] !text-emerald-700 !border font-semibold !border-emerald-300",
+      className:
+        "!bg-[#DCFCE7] !text-emerald-700 !border font-semibold !border-emerald-300",
     };
   }
   if (taskCount >= 11 && taskCount <= 25) {
     return {
       label: "O'zimizdan",
-      className: "!bg-[#86EFAC] !text-emerald-900 !border font-semibold !border-emerald-400",
+      className:
+        "!bg-[#86EFAC] !text-emerald-900 !border font-semibold !border-emerald-400",
     };
   }
   if (taskCount >= 26 && taskCount <= 50) {

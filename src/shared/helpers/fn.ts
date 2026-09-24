@@ -1,6 +1,5 @@
 import { LOCAL_STORAGE_KEYS } from "@/shared/helpers/consts";
 
- 
 export const getLocalStorage = <T>(key: string): T | null => {
   const raw = localStorage.getItem(key);
 

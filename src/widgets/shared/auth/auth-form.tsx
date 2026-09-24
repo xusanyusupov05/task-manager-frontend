@@ -34,9 +34,7 @@ export default function AuthForm() {
         name: values.username,
         password: values.password,
       }).unwrap();
-
       const { token, user } = response?.data || {};
-
       if (token) {
         localStorage.setItem("accessToken", token);
         localStorage.setItem("token", token);
@@ -51,15 +49,14 @@ export default function AuthForm() {
       }
 
       const displayName = fullName || user?.name || values.username;
-
       if (token) {
         dispatch(setCredentials({ user: displayName, token }));
       }
 
       toast.success(
-        `Bitta siz kam edinggiz keling ${displayName[0].toUpperCase() + displayName.slice(1)}!`,
+        `Bitta siz kam edinggiz keling - ${displayName[0].toUpperCase() + displayName.slice(1)}!`,
         {
-          position: "top-right",
+          position: "top-left",
         },
       );
       navigate(ROUTE_PATH.HOME);
@@ -112,7 +109,7 @@ export default function AuthForm() {
             rules={[
               {
                 required: true,
-                message: "Davraga kimsiz ozi? Ismni yozib kiring.",
+                message: "Isminggizni yozing oka ",
               },
             ]}
             className="mb-5"
@@ -131,7 +128,7 @@ export default function AuthForm() {
               {
                 required: true,
                 message:
-                  "Quloqqa aytiladigan sozni unutdingizmi yoki ozimizdan emasmisiz?",
+                  "Quloqqa aytiladigan so'zni yozing. O'zi endi keldinggiz",
               },
             ]}
             className="mb-8"
@@ -145,9 +142,10 @@ export default function AuthForm() {
 
           <Form.Item className="!mb-0">
             <Button
+              type="primary"
               loading={isLoading || isMeLoading}
               htmlType="submit"
-              className="w-full h-12 rounded-xl bg-slate-900 !border-0 text-white font-medium text-lg sora shadow-md shadow-slate-900/20 hover:bg-slate-800 hover:-translate-y-0.5 active:translate-y-0 transition-all duration-300"
+              className="w-full !h-12 !rounded-xl !bg-slate-900 hover:!bg-slate-800 !text-white hover:!text-white font-medium text-lg sora shadow-md shadow-slate-900/20 hover:shadow-lg hover:shadow-slate-900/30 hover:-translate-y-0.5 active:translate-y-0 transition-all duration-300 !border-0 cursor-pointer"
             >
               Davradan joy oling
             </Button>

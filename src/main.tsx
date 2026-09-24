@@ -27,12 +27,13 @@ createRoot(document.getElementById("root")!).render(
               title: "font-bold !text-[16px]",
               description: "rubik !text-[14px] !mt-1",
               icon: "!text-xl",
-              closeButton: "!border-gray-200 !bg-white hover:!bg-gray-100 !text-gray-600",
+              closeButton:
+                "!border-gray-200 !bg-white hover:!bg-gray-100 !text-gray-600",
             },
           }}
         />
         <RouterProvider router={router} />
       </AntdRouters>
     </Provider>
-  </StrictMode>
+  </StrictMode>,
 );

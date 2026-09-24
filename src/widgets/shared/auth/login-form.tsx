@@ -56,10 +56,10 @@ export default function LoginForm() {
         dispatch(setCredentials({ user: displayName, token }));
       }
 
-      toast(
-        `Va nixoyat keldilar ${displayName[0].toUpperCase() + displayName.slice(1)}!`,
+      toast.success(
+        `Keling oka to'rga o'ting - ${displayName[0].toUpperCase() + displayName.slice(1)}!`,
         {
-          position: "top-right",
+          position: "top-left",
         },
       );
       navigate(ROUTE_PATH.HOME);
@@ -112,7 +112,7 @@ export default function LoginForm() {
             rules={[
               {
                 required: true,
-                message: "Davraga kimsiz ozi? Ismni yozib kiring.",
+                message: "O'zizi tanishtring oka davraga kimsiz ?",
               },
             ]}
             className="mb-5"
@@ -130,8 +130,7 @@ export default function LoginForm() {
             rules={[
               {
                 required: true,
-                message:
-                  "Quloqqa aytiladigan sozni unutdingizmi yoki ozimizdan emasmisiz?",
+                message: "Quloqqa aytiladigan so'zni yozing ",
               },
             ]}
             className="mb-8"
@@ -145,9 +144,10 @@ export default function LoginForm() {
 
           <Form.Item className="!mb-0">
             <Button
+              type="primary"
               loading={isLoading || isMeLoading}
               htmlType="submit"
-              className="w-full h-12 rounded-xl bg-slate-900 !border-0 text-white font-medium text-lg sora shadow-md shadow-slate-900/20 hover:bg-slate-800 hover:-translate-y-0.5 active:translate-y-0 transition-all duration-300"
+              className="w-full !h-12 !rounded-xl !bg-slate-900 hover:!bg-slate-800 !text-white hover:!text-white font-medium text-lg sora shadow-md shadow-slate-900/20 hover:shadow-lg hover:shadow-slate-900/30 hover:-translate-y-0.5 active:translate-y-0 transition-all duration-300 !border-0 cursor-pointer"
             >
               Davraga qo'shilish
             </Button>

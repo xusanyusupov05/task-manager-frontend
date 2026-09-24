@@ -22,9 +22,7 @@ export const routeList: IMenu[] = [
   {
     key: ROUTE_PATH.HOME,
     labelKey: (
-      <Typography.Text className="!text-xl rubik">
-        Ayvon
-      </Typography.Text>
+      <Typography.Text className="!text-xl rubik">Ayvon</Typography.Text>
     ),
     icon: <HomeOutlined className="!text-xl !text-black" />,
     element: <HomePage />,
@@ -32,12 +30,9 @@ export const routeList: IMenu[] = [
   {
     key: ROUTE_PATH.KANBAN_MAIN,
     labelKey: (
-      <Typography.Text className="!text-xl rubik">
-        G'alvalar
-      </Typography.Text>
+      <Typography.Text className="!text-xl rubik">G'alvalar</Typography.Text>
     ),
     icon: <AppstoreOutlined className="!text-xl !text-black" />,
     element: <CardsPage />,
   },
 ];
-

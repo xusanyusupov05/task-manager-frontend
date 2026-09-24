@@ -22,7 +22,9 @@ const itemsList = [
 
 export function CreateCardModal({ open, setOpen }: CreateCardModalProps) {
   const [postWorkspace, { isLoading }] = usePostWorkspaceMutation();
-  const [selectedColor, setSelectedColor] = useState<string | null>(itemsList[0].item);
+  const [selectedColor, setSelectedColor] = useState<string | null>(
+    itemsList[0].item,
+  );
   const [form] = Form.useForm();
 
   async function handleCreateWorkspace(values: {
@@ -59,10 +61,10 @@ export function CreateCardModal({ open, setOpen }: CreateCardModalProps) {
       title={
         <div className="flex flex-col mb-1">
           <Typography.Text className="sora text-[22px] font-bold text-slate-900 leading-tight">
-            O'zimizga ish orttiramiz! 
+            O'zimizga ish orttiramiz!
           </Typography.Text>
           <Typography.Text className="rubik text-sm text-gray-500 font-normal mt-1">
-            Rejalarni tartiblab, jamoani safarbar qilamiz
+            Tinch yashash yoqmayapti jamoaga sal yomon ko'rinamiz-a !
           </Typography.Text>
         </div>
       }
@@ -132,7 +134,7 @@ export function CreateCardModal({ open, setOpen }: CreateCardModalProps) {
               loading={isLoading}
               className="w-full !h-12 !bg-slate-950 hover:!bg-black !text-white !font-medium !text-[16px] !rounded-full rubik shadow-md hover:shadow-lg transition-all flex items-center justify-center !border-0 cursor-pointer"
             >
-              Tavakkal boshladik 
+              Tavakkal boshladik
             </Button>
           </Form.Item>
         </Form>

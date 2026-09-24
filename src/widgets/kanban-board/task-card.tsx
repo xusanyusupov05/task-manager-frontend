@@ -3,13 +3,7 @@ import { useDraggable, useDroppable } from "@dnd-kit/react";
 import React from "react";
 
 type TaskLabelType =
-  | "frontend"
-  | "backend"
-  | "design"
-  | "managment"
-  | "qa"
-  | "devops"
-  | "mobile";
+  "frontend" | "backend" | "design" | "managment" | "qa" | "devops" | "mobile";
 
 // Label
 const LABEL_CONFIG: Record<
@@ -96,10 +90,7 @@ export function TaskCard({
             >
               {members.map((member, idx) => (
                 <Tooltip title={member} key={idx}>
-                  <Avatar
-                    size={35}
-                    className="!border !border-red-600"  
-                  >
+                  <Avatar size={35} className="!border !border-red-600">
                     {member[0]}
                   </Avatar>
                 </Tooltip>

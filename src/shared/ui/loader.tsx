@@ -53,11 +53,13 @@ export function TextShimmerWave({
       `}</style>
       <Component
         className={`relative inline-flex items-center select-none [perspective:600px] ${className}`}
-        style={{
-          ...style,
-          "--base-color": baseColor,
-          "--shimmer-color": shimmerColor,
-        } as React.CSSProperties}
+        style={
+          {
+            ...style,
+            "--base-color": baseColor,
+            "--shimmer-color": shimmerColor,
+          } as React.CSSProperties
+        }
       >
         {text.split("").map((char, i) => {
           const delay = (i * duration * (1 / spread)) / (text.length || 1);
@@ -94,12 +96,14 @@ export function Loader({
   text = "Choylashamiz...",
   className = "",
   textClassName = "text-xl font-semibold sora",
-duration = 1.3,
+  duration = 1.3,
   baseColor = "#9ca3af",
   shimmerColor = "#C2C2C2",
 }: LoaderProps) {
   return (
-    <div className={`w-full py-10 flex items-center justify-center ${className}`}>
+    <div
+      className={`w-full py-10 flex items-center justify-center ${className}`}
+    >
       <TextShimmerWave
         className={textClassName}
         duration={duration}

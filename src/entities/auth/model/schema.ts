@@ -6,7 +6,10 @@ export const registerSchema = z.object({
     .min(1, "Ismingizni kiriting")
     .min(3, "Ism kamida 3 ta belgidan iborat bo'lishi kerak")
     .max(30, "Ism 30 ta belgidan oshmasligi kerak")
-    .regex(/^[a-zA-Z0-9_]+$/, "Faqat lotin harflari, raqamlar va pastki chiziq (_) kiritilishi mumkin"),
+    .regex(
+      /^[a-zA-Z0-9_]+$/,
+      "Faqat lotin harflari, raqamlar va pastki chiziq (_) kiritilishi mumkin",
+    ),
   password: z
     .string()
     .min(1, "Parolni kiriting")

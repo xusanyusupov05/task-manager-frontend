@@ -21,25 +21,16 @@ export function KanbanColumn({
   count = 0,
   children,
 }: KanbanColumnProps) {
-  const { ref: droppableRef, isDropTarget } = useDroppable({
-    id,
-  });
+  const { ref: droppableRef, isDropTarget } = useDroppable({ id });
   const [openCardAdd, setOpenCardAdd] = useState(false);
-
-  const {
-    ref: draggableRef,
-    isDragging,
-    handleRef,
-  } = useDraggable({
-    id,
-  });
+  const { ref: draggableRef, isDragging, handleRef } = useDraggable({ id });
 
   const item = [
     {
       key: 1,
       label: (
         <Typography.Text>
-          <EditOutlined /> Ta'mirlash
+          <EditOutlined /> Ta'mirlash{" "}
         </Typography.Text>
       ),
     },
@@ -59,10 +50,11 @@ export function KanbanColumn({
       <div ref={draggableRef} className="h-full">
         <Flex
           vertical
-          className={`min-w-[320px] w-[320px] h-[calc(100vh-190px)] rounded-2xl p-4 shadow-xl overflow-hidden transition-all duration-200 ${isDropTarget
+          className={`min-w-[320px] w-[320px] h-[calc(100vh-190px)] rounded-2xl p-4 shadow-xl overflow-hidden transition-all duration-200 ${
+            isDropTarget
               ? "bg-blue-50/80 ring-2 ring-blue-400 ring-dashed"
               : "bg-[#f8fafc] border border-gray-100"
-            } ${isDragging ? "opacity-40 scale-95 rotate-1 shadow-2xl" : ""}`}
+          } ${isDragging ? "opacity-40 scale-95 rotate-1 shadow-2xl" : ""}`}
         >
           <Flex
             align="center"

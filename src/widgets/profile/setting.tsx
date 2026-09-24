@@ -5,14 +5,12 @@ import { ConfirmDialog } from "@/shared/ui/confirm-dialog";
 import { useState } from "react";
 
 export function ProfileSetting() {
-  
   const [open, setOpen] = useState(false);
   const theme = [
     { label: "Yorug'", value: "light" },
     { label: "Qorong'u", value: "dark" },
     { label: "Ob havoga qarab", value: "system" },
   ];
-
 
   const handleLogOut = () => {
     localStorage.clear();

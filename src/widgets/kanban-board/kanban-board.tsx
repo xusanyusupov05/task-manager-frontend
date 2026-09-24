@@ -11,7 +11,11 @@ import {
 } from "@ant-design/icons";
 import { ROUTE_PATH } from "@/shared/consts/routes-path";
 import { KanbanCreate } from "@/widgets/kanban-board/kanban-create";
-import { useGetWorkspaceColumnsQuery } from "@/entities/workspaces-columns/api";
+import {
+  useGetWorkspaceColumnsQuery,
+  usePatchReorderColumnsMutation,
+} from "@/entities/workspaces-columns/api";
+import { toast } from "sonner";
 
 interface Task {
   id: string;
@@ -39,7 +43,7 @@ interface ColumnsState {
 }
 
 function getFormattedColumns(
-  data: WorkspaceColumnsData | ColumnItem[] | undefined
+  data: WorkspaceColumnsData | ColumnItem[] | undefined,
 ): ColumnsState {
   const rawColumns = (Array.isArray(data) ? data : data?.data) || [];
   if (!Array.isArray(rawColumns)) return {};
@@ -65,10 +69,11 @@ export function KanbanBoard() {
   >(undefined);
   const [columns, setColumns] = useState<ColumnsState>({});
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [reorderColumns] = usePatchReorderColumnsMutation();
 
   const { data } = useGetWorkspaceColumnsQuery(
     { workspaceId },
-    { skip: !workspaceId }
+    { skip: !workspaceId },
   );
 
   if (data !== prevData) {
@@ -98,17 +103,37 @@ export function KanbanBoard() {
         : findTaskLocation(targetId)?.colId;
       if (!targetColId || targetColId === sourceId) return;
 
-      setColumns((prev) => {
-        const entries = Object.entries(prev);
-        const fromIdx = entries.findIndex(([id]) => id === sourceId);
-        const toIdx = entries.findIndex(([id]) => id === targetColId);
-        if (fromIdx === -1 || toIdx === -1) return prev;
+      const entries = Object.entries(columns);
+      const fromIdx = entries.findIndex(([id]) => id === sourceId);
+      const toIdx = entries.findIndex(([id]) => id === targetColId);
+      if (fromIdx === -1 || toIdx === -1 || fromIdx === toIdx) return;
 
-        const updated = [...entries];
-        const [moved] = updated.splice(fromIdx, 1);
-        updated.splice(toIdx, 0, moved);
-        return Object.fromEntries(updated);
-      });
+      const updated = [...entries];
+      const [moved] = updated.splice(fromIdx, 1);
+      updated.splice(toIdx, 0, moved);
+
+      setColumns(Object.fromEntries(updated));
+
+      const rawColumns = (Array.isArray(data) ? data : data?.data) || [];
+      const targetWorkspaceId = workspaceId || rawColumns[0]?.workspaceId || "";
+
+      if (targetWorkspaceId) {
+        const items = updated.map(([id], index) => ({
+          id,
+          order: index + 1,
+        }));
+
+        reorderColumns({
+          workspaceId: targetWorkspaceId,
+          items,
+        })
+          .unwrap()
+          .catch((error) => {
+            console.error("Ustunlar tartibini o'zgartirishda xatolik:", error);
+            toast.error("Ustunlar tartibini saqlashda xatolik yuz berdi!");
+            setColumns(getFormattedColumns(data));
+          });
+      }
       return;
     }
 

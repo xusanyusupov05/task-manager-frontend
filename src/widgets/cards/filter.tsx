@@ -23,7 +23,11 @@ export function CardFilter() {
   };
 
   return (
-    <Flex className="w-full h-[45px] px-5" justify="space-between" align="center">
+    <Flex
+      className="w-full h-[45px] px-5"
+      justify="space-between"
+      align="center"
+    >
       <Input
         placeholder="G'alvalardan qidirish..."
         prefix={<SearchOutlined className="text-gray-400 text-lg mr-1" />}

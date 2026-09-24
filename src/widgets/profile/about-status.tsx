@@ -9,17 +9,20 @@ interface StatusItem {
 const statusList: StatusItem[] = [
   {
     label: "Begona bola",
-    className: "!bg-[#F0FDF4] !text-emerald-600 !border font-semibold !border-emerald-200",
+    className:
+      "!bg-[#F0FDF4] !text-emerald-600 !border font-semibold !border-emerald-200",
     range: "0 ta vazifa",
   },
   {
     label: "Do'konga chopuvchi",
-    className: "!bg-[#DCFCE7] !text-emerald-700 !border font-semibold !border-emerald-300",
+    className:
+      "!bg-[#DCFCE7] !text-emerald-700 !border font-semibold !border-emerald-300",
     range: "1 - 10 ta vazifa",
   },
   {
     label: "O'zimizdan",
-    className: "!bg-[#86EFAC] !text-emerald-900 !border font-semibold !border-emerald-400",
+    className:
+      "!bg-[#86EFAC] !text-emerald-900 !border font-semibold !border-emerald-400",
     range: "11 - 25 ta vazifa",
   },
   {
@@ -39,7 +42,8 @@ const statusList: StatusItem[] = [
   },
   {
     label: "Oqsoqol",
-    className: "!bg-yellow-500 !text-black !border !border-black font-bold shadow-sm",
+    className:
+      "!bg-yellow-500 !text-black !border !border-black font-bold shadow-sm",
     range: "201+ ta vazifa",
   },
 ];
@@ -67,4 +71,3 @@ export function AboutStatus() {
     </Flex>
   );
 }
-

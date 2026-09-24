@@ -25,6 +25,20 @@ const workspaceColumnsApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["Workspace-columns"],
     }),
+    patchReorderColumns: builder.mutation({
+      query: ({
+        workspaceId,
+        items,
+      }: {
+        workspaceId: string;
+        items: { id: string; order: number }[];
+      }) => ({
+        url: API_MAP.WORKSPACE_COLUMNS(workspaceId),
+        method: API_METHODS.PATCH,
+        body: items,
+      }),
+      invalidatesTags: ["Workspace-columns"],
+    }),
   }),
   overrideExisting: false,
 });
@@ -32,4 +46,5 @@ const workspaceColumnsApi = baseApi.injectEndpoints({
 export const {
   useGetWorkspaceColumnsQuery,
   usePostWorkspaceColumnMutation,
+  usePatchReorderColumnsMutation,
 } = workspaceColumnsApi;
