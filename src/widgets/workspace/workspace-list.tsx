@@ -1,6 +1,6 @@
 import { Col, Row, Typography } from "antd";
 import { useSearchParams } from "react-router-dom";
-import { CreateCard } from "./card";
+import { CreateCard } from "./workspace-card";
 import { Loader } from "@/shared/ui/loader";
 
 export interface CardItem {

@@ -2,7 +2,7 @@ import { PlusCircleOutlined, SearchOutlined } from "@ant-design/icons";
 import { Button, Flex, Input } from "antd";
 import { useState } from "react";
 import { useSearchParams } from "react-router-dom";
-import { CreateCardModal } from "./create-card-modal";
+import { CreateCardModal } from "./create-workspace-card-modal";
 
 export function CardFilter() {
   const [isModalOpen, setIsModalOpen] = useState(false);

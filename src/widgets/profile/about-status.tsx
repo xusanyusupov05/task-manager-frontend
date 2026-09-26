@@ -20,13 +20,13 @@ const statusList: StatusItem[] = [
     range: "1 - 10 ta vazifa",
   },
   {
-    label: "O'zimizdan",
+    label: "O'zimizning bola",
     className:
       "!bg-[#86EFAC] !text-emerald-900 !border font-semibold !border-emerald-400",
     range: "11 - 25 ta vazifa",
   },
   {
-    label: "Ishonganimiz",
+    label: "Ishongan tog'imiz",
     className: "!bg-[#22C55E] !text-white font-semibold !border-transparent",
     range: "26 - 50 ta vazifa",
   },
@@ -36,12 +36,12 @@ const statusList: StatusItem[] = [
     range: "51 - 100 ta vazifa",
   },
   {
-    label: "Katta uka",
+    label: "Okaxon",
     className: "!bg-[#064E3B] !text-white font-semibold !border-transparent",
     range: "101 - 200 ta vazifa",
   },
   {
-    label: "Oqsoqol",
+    label: "Choyxona oqsoqoli",
     className:
       "!bg-yellow-500 !text-black !border !border-black font-bold shadow-sm",
     range: "201+ ta vazifa",

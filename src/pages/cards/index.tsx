@@ -1,5 +1,5 @@
 import { PageWrapper } from "@/shared/ui/pege-wrapper";
-import { CardsMain } from "@/widgets/cards";
+import { CardsMain } from "@/widgets/workspace";
 import { Container } from "@/shared/ui/container";
 import { Breadcrumb, Flex, Typography } from "antd";
 import { Link } from "react-router-dom";

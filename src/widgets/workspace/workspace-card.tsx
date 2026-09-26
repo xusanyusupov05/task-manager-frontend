@@ -54,7 +54,7 @@ export function CreateCard({
     try {
       await deleteWorkspace(targetId).unwrap();
       toast.success("G'alva chopildi!", {
-        description: "Bir bosh og'rig'iqdan muvaffaqiyatli qutildik",
+        description: "Bir bosh og'rig'iqdan qutildik",
       });
       setConfirmOpen(false);
     } catch (error) {
@@ -66,11 +66,7 @@ export function CreateCard({
   const items: NonNullable<MenuProps["items"]> = [
     {
       key: "1",
-      label: (
-        <Typography.Text className="text-[15px] font-medium !text-red-500 rubik">
-          Chopish
-        </Typography.Text>
-      ),
+      label: ( <Typography.Text className="text-[15px] font-medium !text-red-500 rubik"> Chopish </Typography.Text> ),
       icon: <DeleteOutlined className="text-red-500 !text-[16px]" />,
       onClick: ({ domEvent }) => {
         domEvent.stopPropagation();
@@ -79,11 +75,7 @@ export function CreateCard({
     },
     {
       key: "2",
-      label: (
-        <Typography.Text className="text-[15px] font-medium !text-slate-800 rubik">
-          G'alva ta'miri
-        </Typography.Text>
-      ),
+      label: ( <Typography.Text className="text-[15px] font-medium !text-slate-800 rubik"> G'alva ta'miri </Typography.Text> ),
       icon: <EditOutlined className="text-yellow-500 !text-[16px]" />,
       onClick: ({ domEvent }) => {
         domEvent.stopPropagation();
@@ -94,11 +86,7 @@ export function CreateCard({
   if (description) {
     items.push({
       key: "3",
-      label: (
-        <Typography.Text className="text-[15px] font-medium !text-slate-800 rubik">
-          Gapning indallosi
-        </Typography.Text>
-      ),
+      label: ( <Typography.Text className="text-[15px] font-medium !text-slate-800 rubik"> Gapning indallosi </Typography.Text> ),
       icon: <InfoCircleOutlined className="text-blue-500 !text-[16px]" />,
       onClick: ({ domEvent }) => {
         domEvent.stopPropagation();

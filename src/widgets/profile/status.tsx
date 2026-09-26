@@ -22,14 +22,14 @@ const getNicknameConfig = (taskCount: number): NicknameConfig => {
   }
   if (taskCount >= 11 && taskCount <= 25) {
     return {
-      label: "O'zimizdan",
+      label: "O'zimizning bola",
       className:
         "!bg-[#86EFAC] !text-emerald-900 !border font-semibold !border-emerald-400",
     };
   }
   if (taskCount >= 26 && taskCount <= 50) {
     return {
-      label: "Ishonganimiz",
+      label: "Ishongan tog'imiz",
       className: "!bg-[#22C55E] !text-white font-semibold !border-transparent",
     };
   }
@@ -41,12 +41,12 @@ const getNicknameConfig = (taskCount: number): NicknameConfig => {
   }
   if (taskCount >= 101 && taskCount <= 200) {
     return {
-      label: "Katta uka",
+      label: "Okaxon",
       className: "!bg-[#064E3B] !text-white font-semibold !border-transparent",
     };
   }
   return {
-    label: "Katta aka",
+    label: "Choyxona oqsoqoli",
     className:
       "!bg-yellow-500 !text-black !border !border-black font-bold shadow-sm",
   };

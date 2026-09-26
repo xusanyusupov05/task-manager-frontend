@@ -1,13 +1,20 @@
 import { DragDropProvider, type DragEndEvent } from "@dnd-kit/react";
 import { KanbanColumn } from "@/widgets/kanban-board/kanban-column";
 import { TaskCard } from "@/widgets/kanban-board/task-card";
-import { Breadcrumb, Button, Flex, Typography } from "antd";
+import {
+  Breadcrumb,
+  Button,
+  Flex,
+  Popover,
+  Typography,
+} from "antd";
 import { useState } from "react";
 import { Link, useSearchParams } from "react-router-dom";
 import {
   PlusOutlined,
   HomeOutlined,
   AppstoreOutlined,
+  UserAddOutlined,
 } from "@ant-design/icons";
 import { ROUTE_PATH } from "@/shared/consts/routes-path";
 import { KanbanCreate } from "@/widgets/kanban-board/kanban-create";
@@ -16,6 +23,7 @@ import {
   usePatchReorderColumnsMutation,
 } from "@/entities/workspaces-columns/api";
 import { toast } from "sonner";
+import { KanbanInviteMember } from "./kanban-invite-member";
 
 interface Task {
   id: string;
@@ -176,7 +184,7 @@ export function KanbanBoard() {
 
   return (
     <Flex vertical className="w-full h-full pt-3">
-      <div className="w-full px-6 mb-3">
+      <div className="w-full flex items-center justify-between px-6 mb-3">
         <Breadcrumb
           className="sora"
           items={[
@@ -221,6 +229,18 @@ export function KanbanBoard() {
             },
           ]}
         />
+        <Popover
+          content={<KanbanInviteMember />}
+          trigger={["click"]}
+          placement="bottomRight"
+        >
+          <Button
+            className="sora flex items-center gap-2 rounded-2xl"
+            icon={<UserAddOutlined />}
+          >
+            Bosh og'riqga jalb qilish
+          </Button>
+        </Popover>
       </div>
 
       <DragDropProvider onDragEnd={handleDragEnd}>

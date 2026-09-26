@@ -1,5 +1,5 @@
 import { useSearchParams } from "react-router-dom";
-import { CardList, type CardItem } from "./card-list";
+import { CardList, type CardItem } from "./workspace-list";
 import { CardFilter } from "./filter";
 import { useGetWorkspacesQuery } from "../../entities/workspaces/api";
 
