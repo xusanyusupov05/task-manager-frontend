@@ -13,4 +13,6 @@ export const API_MAP = {
   WORKSPACE_BOARD: (workspaceId: string) => `/workspaces/${workspaceId}/board`,
   WORKSPACE_INVITE_MEMBER: (workspaceId: string) =>
     `/workspaces/${workspaceId}/members`,
+  WOKSPACE_GET_ALL_MEMBERS: (workspaceId: string) => `/workspaces/${workspaceId}/members`,
+  WORKSPACE_DELETE_MEMBER:(workspaceId: string,memberId:string)=>`/workspaces/${workspaceId}/members/${memberId}`,
 };

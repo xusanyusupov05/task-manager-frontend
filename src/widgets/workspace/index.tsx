@@ -10,11 +10,11 @@ export function CardsMain() {
   const [searchParams] = useSearchParams();
   const search = searchParams.get("search")?.toLowerCase().trim() || "";
 
-  const filteredData = workspaces?.data?.filter((item: CardItem) => {
+  const filteredData = workspaces?.data?.content?.filter((item: CardItem) => {
     if (!search) return true;
-    return item.title?.toLowerCase().includes(search);
+    return item?.title?.toLowerCase().includes(search);
   });
-  console.log(workspaces);
+  
 
   return (
     <div className="w-full">

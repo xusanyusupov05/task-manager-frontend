@@ -1,13 +1,7 @@
 import { DragDropProvider, type DragEndEvent } from "@dnd-kit/react";
 import { KanbanColumn } from "@/widgets/kanban-board/kanban-column";
 import { TaskCard } from "@/widgets/kanban-board/task-card";
-import {
-  Breadcrumb,
-  Button,
-  Flex,
-  Popover,
-  Typography,
-} from "antd";
+import { Breadcrumb, Button, Flex, Popover, Typography } from "antd";
 import { useState } from "react";
 import { Link, useSearchParams } from "react-router-dom";
 import {
@@ -24,6 +18,9 @@ import {
 } from "@/entities/workspaces-columns/api";
 import { toast } from "sonner";
 import { KanbanInviteMember } from "./kanban-invite-member";
+import { useGetAllMembersQuery } from "@/entities/workspaces-invite-member/api";
+import { useGetMeQuery } from "@/entities/me";
+import type { WorkspaceMember } from "@/entities/workspaces-invite-member/model/schema";
 
 interface Task {
   id: string;
@@ -72,6 +69,11 @@ export function KanbanBoard() {
   const [searchParams] = useSearchParams();
   const workspaceId = searchParams.get("workspaceId") || "";
 
+  const { data: members } = useGetAllMembersQuery(workspaceId);
+  const { data: meData } = useGetMeQuery();
+  const currentUserRole = members?.data?.find(
+    (user: WorkspaceMember) => user?.id === meData?.data?.id
+  )?.role;
   const [prevData, setPrevData] = useState<
     WorkspaceColumnsData | ColumnItem[] | undefined
   >(undefined);
@@ -98,6 +100,10 @@ export function KanbanBoard() {
   };
 
   const handleDragEnd = (event: DragEndEvent) => {
+    if(currentUserRole === "VIEWER"){
+      toast.error("Sizga bunday huquq berilmagan!");
+      return;
+    }
     const { operation } = event;
     if (!operation?.source || !operation?.target) return;
 
@@ -230,7 +236,7 @@ export function KanbanBoard() {
           ]}
         />
         <Popover
-          content={<KanbanInviteMember />}
+          content={<KanbanInviteMember workspaceId={workspaceId} />}
           trigger={["click"]}
           placement="bottomRight"
           arrow={false}
@@ -244,7 +250,7 @@ export function KanbanBoard() {
             className="sora flex items-center gap-2 rounded-2xl"
             icon={<UserAddOutlined />}
           >
-            Bosh og'riqga odam qo'shish
+           Bosh og'riqqa odam qo'shish
           </Button>
         </Popover>
       </div>
@@ -281,6 +287,7 @@ export function KanbanBoard() {
           >
             <Button
               icon={<PlusOutlined />}
+              disabled={currentUserRole === "VIEWER" || currentUserRole === "MEMBER"}
               onClick={() => setIsModalOpen((prev) => !prev)}
               className="w-full !h-[52px] !bg-[#f8fafc] !border !border-dashed !border-gray-500 hover:!border-gray-900 hover:!bg-white !text-slate-700 hover:!text-black !rounded-2xl cursor-pointer sora font-semibold text-[15px] flex items-center justify-center gap-2 active:scale-[0.99]"
             >

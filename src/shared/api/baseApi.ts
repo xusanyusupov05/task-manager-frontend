@@ -32,5 +32,5 @@ export const baseApi = createApi({
   baseQuery,
   refetchOnReconnect: true,
   endpoints: () => ({}),
-  tagTypes: ["Workspace", "Workspace-columns"],
+  tagTypes: ["Workspace", "Workspace-columns","Workspace-members"],
 });
