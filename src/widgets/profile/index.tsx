@@ -43,7 +43,9 @@ export default function PersonalProfileMain() {
         >
           <Flex align="center" gap={24} className="w-full pt-10 pl-5">
             <Avatar size={140}>
-              <span className="text-[55px] sora font-bold">{data?.data?.fullName?.[0].toUpperCase()}</span>
+              <span className="text-[55px] sora font-bold">
+                {data?.data?.fullName?.[0].toUpperCase()}
+              </span>
             </Avatar>
             <Flex vertical gap={10}>
               {/* {role === "admin" ? (

@@ -4,6 +4,7 @@ import {
   useDeleteMemberWorkspaceMutation,
   useGetAllMembersQuery,
   useInviteMemberMutation,
+  useUpdateMemberRoleMutation,
 } from "@/entities/workspaces-invite-member/api";
 import { useGetMeQuery } from "@/entities/me";
 import { toast } from "sonner";
@@ -34,6 +35,7 @@ export function KanbanInviteMember({
   } = useGetAllMembersQuery(workspaceId, { skip: !workspaceId });
   const [deleteMemberWorkspace] = useDeleteMemberWorkspaceMutation();
   const { data: meData } = useGetMeQuery();
+  const [updateMemberRole] = useUpdateMemberRoleMutation();
 
   const currentUserMember = data?.data?.find(
     (user: WorkspaceMember) => user?.id === meData?.data?.id,
@@ -89,6 +91,24 @@ export function KanbanInviteMember({
     }
   };
 
+  const handleUpdateRole = async (userId: string, newRole: string) => {
+    if (!workspaceId) return toast.error("Workspace topilmadi!");
+    try {
+      await updateMemberRole({
+        workspaceId,
+        userId,
+        role: newRole,
+      }).unwrap();
+      toast.success("Rol muvaffaqiyatli o'zgartirildi!");
+      refetch();
+    } catch (err) {
+      const error = err as { data?: { message?: string } };
+      console.error("Xatolik yuz berdi:", error);
+      toast.error(
+        error?.data?.message || "Rolni o'zgartirishda xatolik yuz berdi!",
+      );
+    }
+  };
   function getRoleColor(role: string) {
     switch (role.toUpperCase()) {
       case "OWNER":
@@ -131,7 +151,7 @@ export function KanbanInviteMember({
           <Input
             placeholder="Laqabingiz yoki email"
             disabled={isDisabled}
-            className="w-full bg-[#f8fafc] !border-gray-200 focus:!border-[#1877f2] focus:!bg-white !rounded-xl px-3.5 h-10 text-xs text-gray-900 placeholder:!text-gray-400 outline-none transition-all"
+            className="w-full !border-gray-200 focus:!border-[#1877f2] focus:!bg-white !rounded-xl px-3.5 h-10 text-xs text-gray-900 placeholder:!text-gray-400 outline-none transition-all"
           />
         </Form.Item>
 
@@ -159,7 +179,7 @@ export function KanbanInviteMember({
               htmlType="submit"
               loading={isLoading}
               disabled={isDisabled}
-              className="h-10 px-5 !bg-[#1877f2] hover:!bg-[#166fe5] text-white text-xs font-semibold !rounded-xl !border-0 cursor-pointer transition-all active:scale-95 shadow-md shadow-blue-500/20"
+              className="h-10 px-5 !bg-[#6B7280] text-white text-xs font-semibold !rounded-xl !border-0 cursor-pointer transition-all hover:!bg-[#4a4e54]"
             >
               Taklif qilish
             </Button>
@@ -182,9 +202,9 @@ export function KanbanInviteMember({
             <Loader />
           ) : (
             data?.data?.map((member: WorkspaceMember) => {
-              const displayName = member.fullName || member.name || member.email || "User";
+              const displayName =
+                member.fullName || member.name || member.email || "User";
               const initial = displayName[0]?.toUpperCase() || "U";
-
               return (
                 <div
                   key={member.id}
@@ -212,6 +232,8 @@ export function KanbanInviteMember({
                     <Select
                       defaultValue={member?.role}
                       options={ROLE_OPTIONS}
+                      onChange={(value) => handleUpdateRole(member?.id, value)}
+                      disabled={isDisabled}
                       popupMatchSelectWidth={120}
                       className="w-32 h-8 text-xs font-medium"
                       dropdownStyle={{

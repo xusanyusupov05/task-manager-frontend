@@ -14,7 +14,6 @@ export function CardsMain() {
     if (!search) return true;
     return item?.title?.toLowerCase().includes(search);
   });
-  
 
   return (
     <div className="w-full">

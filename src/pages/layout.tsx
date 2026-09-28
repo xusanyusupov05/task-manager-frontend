@@ -12,9 +12,7 @@ const MainLayout: React.FC = () => {
     localStorage.getItem("accessToken") || localStorage.getItem("token");
 
   if (!token) {
-    return (
-      <Navigate to={ROUTE_PATH.AUTH} replace state={{ from: location }} />
-    );
+    return <Navigate to={ROUTE_PATH.AUTH} replace state={{ from: location }} />;
   }
 
   return (

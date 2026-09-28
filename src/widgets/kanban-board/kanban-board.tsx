@@ -72,7 +72,7 @@ export function KanbanBoard() {
   const { data: members } = useGetAllMembersQuery(workspaceId);
   const { data: meData } = useGetMeQuery();
   const currentUserRole = members?.data?.find(
-    (user: WorkspaceMember) => user?.id === meData?.data?.id
+    (user: WorkspaceMember) => user?.id === meData?.data?.id,
   )?.role;
   const [prevData, setPrevData] = useState<
     WorkspaceColumnsData | ColumnItem[] | undefined
@@ -100,7 +100,7 @@ export function KanbanBoard() {
   };
 
   const handleDragEnd = (event: DragEndEvent) => {
-    if(currentUserRole === "VIEWER"){
+    if (currentUserRole === "VIEWER") {
       toast.error("Sizga bunday huquq berilmagan!");
       return;
     }
@@ -250,7 +250,7 @@ export function KanbanBoard() {
             className="sora flex items-center gap-2 rounded-2xl"
             icon={<UserAddOutlined />}
           >
-           Bosh og'riqqa odam qo'shish
+            Bosh og'riqqa odam qo'shish
           </Button>
         </Popover>
       </div>
@@ -287,7 +287,9 @@ export function KanbanBoard() {
           >
             <Button
               icon={<PlusOutlined />}
-              disabled={currentUserRole === "VIEWER" || currentUserRole === "MEMBER"}
+              disabled={
+                currentUserRole === "VIEWER" || currentUserRole === "MEMBER"
+              }
               onClick={() => setIsModalOpen((prev) => !prev)}
               className="w-full !h-[52px] !bg-[#f8fafc] !border !border-dashed !border-gray-500 hover:!border-gray-900 hover:!bg-white !text-slate-700 hover:!text-black !rounded-2xl cursor-pointer sora font-semibold text-[15px] flex items-center justify-center gap-2 active:scale-[0.99]"
             >
