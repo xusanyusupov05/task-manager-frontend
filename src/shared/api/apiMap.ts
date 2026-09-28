@@ -11,4 +11,6 @@ export const API_MAP = {
   WORKSPACE_COLUMN_ITEM: (workspaceId: string, columnId: string) =>
     `/workspaces/${workspaceId}/columns/${columnId}`,
   WORKSPACE_BOARD: (workspaceId: string) => `/workspaces/${workspaceId}/board`,
+  WORKSPACE_INVITE_MEMBER: (workspaceId: string) =>
+    `/workspaces/${workspaceId}/members`,
 };

@@ -13,7 +13,7 @@ const MainLayout: React.FC = () => {
 
   if (!token) {
     return (
-      <Navigate to={ROUTE_PATH.LOGIN} replace state={{ from: location }} />
+      <Navigate to={ROUTE_PATH.AUTH} replace state={{ from: location }} />
     );
   }
 

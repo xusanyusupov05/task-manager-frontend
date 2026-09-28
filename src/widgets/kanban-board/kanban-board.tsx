@@ -233,12 +233,18 @@ export function KanbanBoard() {
           content={<KanbanInviteMember />}
           trigger={["click"]}
           placement="bottomRight"
+          arrow={false}
+          overlayInnerStyle={{
+            padding: 0,
+            backgroundColor: "transparent",
+            boxShadow: "none",
+          }}
         >
           <Button
             className="sora flex items-center gap-2 rounded-2xl"
             icon={<UserAddOutlined />}
           >
-            Bosh og'riqga jalb qilish
+            Bosh og'riqga odam qo'shish
           </Button>
         </Popover>
       </div>

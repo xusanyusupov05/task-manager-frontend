@@ -4,6 +4,15 @@ export const AntdRouters = ({ children }: { children: React.ReactNode }) => {
   return (
     <ConfigProvider
       theme={{
+        token: {
+          colorBgContainer: "#ffffff",
+          colorBgElevated: "#ffffff",
+          colorBorder: "#e2e8f0",
+          colorPrimary: "#1877f2",
+          colorText: "#0f172a",
+          borderRadius: 10,
+          fontFamily: "Sora, sans-serif",
+        },
         components: {
           Menu: {
             itemSelectedColor: "#000",
@@ -32,7 +41,7 @@ export const AntdRouters = ({ children }: { children: React.ReactNode }) => {
           Select: {
             controlHeight: 40,
             borderRadius: 10,
-            hoverBorderColor: "#d9d9d9",
+            hoverBorderColor: "#cbd5e1",
             activeBorderColor: "#d9d9d9",
             activeOutlineColor: "transparent",
             controlOutline: "transparent",
@@ -41,6 +50,8 @@ export const AntdRouters = ({ children }: { children: React.ReactNode }) => {
             optionSelectedColor: "#000",
             optionActiveBg: "rgba(0, 0, 0, 0.04)",
             fontSize: 14,
+            colorBgContainer: "#ffffff",
+            colorBorder: "#e2e8f0",
           },
         },
       }}
