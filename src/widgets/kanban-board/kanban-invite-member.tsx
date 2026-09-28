@@ -62,7 +62,8 @@ export function KanbanInviteMember({
       toast.success("Taklif muvaffaqiyatli yuborildi!");
       form.resetFields();
       refetch();
-    } catch (error) {
+    } catch (err) {
+      const error = err as { data?: { message?: string } };
       console.error("Xatolik yuz berdi:", error);
       toast.error(
         error?.data?.message || "Taklif yuborishda xatolik yuz berdi!",
@@ -79,7 +80,8 @@ export function KanbanInviteMember({
       }).unwrap();
       toast.success("A'zo o'chirildi!");
       refetch();
-    } catch (error) {
+    } catch (err) {
+      const error = err as { data?: { message?: string } };
       console.error("Xatolik yuz berdi:", error);
       toast.error(
         error?.data?.message || "A'zo o'chirishda xatolik yuz berdi!",
