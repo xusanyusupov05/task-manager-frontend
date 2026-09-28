@@ -43,7 +43,6 @@ export function KanbanInviteMember({
   const isOwnerOrAdmin =
     currentUserMember?.role === "OWNER" || currentUserMember?.role === "ADMIN";
   const isDisabled = !isOwnerOrAdmin;
-  const canAssignRole = isOwnerOrAdmin;
 
   const handleFinish = async (values: {
     usernameOrEmail: string;
@@ -156,7 +155,6 @@ export function KanbanInviteMember({
         </Form.Item>
 
         <div className="flex items-center gap-2">
-          {canAssignRole && (
             <Form.Item name="role" className="!mb-0 flex-1">
               <Select
                 options={ROLE_OPTIONS}
@@ -171,7 +169,6 @@ export function KanbanInviteMember({
                 }}
               />
             </Form.Item>
-          )}
 
           <Form.Item className="!mb-0 shrink-0">
             <Button
@@ -179,7 +176,7 @@ export function KanbanInviteMember({
               htmlType="submit"
               loading={isLoading}
               disabled={isDisabled}
-              className="h-10 px-5 !bg-[#6B7280] text-white text-xs font-semibold !rounded-xl !border-0 cursor-pointer transition-all hover:!bg-[#4a4e54]"
+              className="h-10 px-5 !bg-[#6B7280] text-white! text-xs font-semibold !rounded-xl !border-0 cursor-pointer transition-all hover:!bg-[#4a4e54] text-white!"
             >
               Taklif qilish
             </Button>
