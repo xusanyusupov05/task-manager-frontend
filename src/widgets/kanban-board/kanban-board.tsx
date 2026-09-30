@@ -266,6 +266,7 @@ export function KanbanBoard() {
               key={columnId}
               id={columnId}
               title={column.title}
+              workspaceId={workspaceId}
               count={column.tasks.length}
             >
               {column.tasks.map((task) => (

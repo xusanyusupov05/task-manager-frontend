@@ -39,12 +39,19 @@ const workspaceColumnsApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["Workspace-columns"],
     }),
+    deleteColumn: builder.mutation({
+      query: ({ workspaceId, id }: { workspaceId: string; id: string }) => ({
+        url: API_MAP.WORKSPACE_DELETE_COLUMN(workspaceId, id),
+        method: API_METHODS.DELETE,
+      }),
+      invalidatesTags: ["Workspace-columns"],
+    }),
   }),
-  overrideExisting: false,
 });
 
 export const {
   useGetWorkspaceColumnsQuery,
   usePostWorkspaceColumnMutation,
   usePatchReorderColumnsMutation,
+  useDeleteColumnMutation,
 } = workspaceColumnsApi;

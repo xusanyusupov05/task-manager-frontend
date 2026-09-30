@@ -7,12 +7,14 @@ import {
 import { Button, Dropdown, Flex, Form, Input, Select, Typography } from "antd";
 import { useDraggable, useDroppable } from "@dnd-kit/react";
 import { useState } from "react";
+import {useDeleteColumnMutation} from '@/entities/workspaces-columns/api'
 
 interface KanbanColumnProps {
   id: string;
   title: string;
   count?: number;
   children?: React.ReactNode;
+  workspaceId?: string;
 }
 
 export function KanbanColumn({
@@ -20,26 +22,36 @@ export function KanbanColumn({
   title,
   count = 0,
   children,
+  workspaceId
 }: KanbanColumnProps) {
   const { ref: droppableRef, isDropTarget } = useDroppable({ id });
   const [openCardAdd, setOpenCardAdd] = useState(false);
   const { ref: draggableRef, isDragging, handleRef } = useDraggable({ id });
+  const [deleteColumn] = useDeleteColumnMutation()
 
+  async function handleDelete() {
+    try{
+      const data = await deleteColumn({workspaceId,id}).unwrap()
+      console.log(data);
+    }catch(err){
+      console.log(err)
+    }
+  }
   const item = [
     {
       key: 1,
       label: (
         <Typography.Text>
-          <EditOutlined /> Ta'mirlash{" "}
+          <EditOutlined /> Ta'mirlash
         </Typography.Text>
       ),
     },
     {
       key: 2,
       label: (
-        <Typography.Text className="text-red-500">
+        <Typography.Text onClick={handleDelete} className="text-red-500 sora">
           <DeleteOutlined />
-          Chopish
+          Chopishsh
         </Typography.Text>
       ),
     },
